@@ -1,0 +1,170 @@
+\documentclass[12pt,english]{article}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage[ampersand]{easylist}
+\usepackage{scrextend}
+\usepackage[utf8]{inputenc}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document Setup
+
+\pagenumbering{arabic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title block - Page 0
+
+% Cover page. Clearly indicate the names of the team members.
+% Also provide a table comparing the given specs and achieved spec (remember
+% this is for the NON-BONUS part of the project only). You also need to provide
+% us a percentage-wise break down of area consumed by different sections of
+% bias circuit (VNMOS-bias, VPMOS-bias & bias generator circuit) as compared to
+% your core circuit area (refer to Figure 3). For area calculation, use
+% AMOS = W * L. Also include the area of resistors in your design. Assume that
+% the sheet resistance is 5.5 kohm/sq and the minimum length of resistor is
+% 1 um
+
+\author{
+  Kankanala, Usha\\
+  \texttt{usha.kankanala@gmail.com}\\
+  \texttt{SUID:xxxx}
+  \and
+  Lenius, Samuel\\
+  \texttt{lenius@stanford.com}\\
+  \texttt{SUID:06091240}
+}
+
+\title{2015 EE214A Design Project}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Performance Summary Block - Page 0
+
+\begin{abstract}
+  Area Breakdown:
+  \begin{addmargin}[1em]{0em}
+  \begin{itemize}
+    \item PMOS Bias Gen: 25\%
+    \item NMOS Bias Gen: 25\%
+    \item Core circuit: 25\%
+    \item Resistors: 25\%
+  \end{itemize}
+  \end{addmargin}
+\end{abstract}
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Design Outline - Page 1
+
+% Outline of your design. How did you approach this problem? What are some of
+% your key design choices? Flow charts and graphs of how the trade-offs are
+% connected provide the best clarity in explaining (we'll show some examples in
+% class). Half of the grading (i.e. 25 Points) is related to Design Flow,
+% Insight and Optimization Strategy. The clarity of your discussion and the
+% insight you give, starting on Page 1, is a major factor in doing well for
+% these 25 Points.
+
+\section{Design Outline}
+Text of design outline
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Design Schematic - Page 2
+
+% Schematic diagram of your final design, with component values (i.e. W, L
+% values etc.), node voltages and bias currents (from SPICE .op simulation)
+% clearly labeled (Spend time to make this schematic complete, readable, and
+% clear!). Show component values right next to the components, and currents next
+% to the branches (i.e., absolutely, positively do not make us refer to a
+% look-up table!). Annotate all transistors with their drain current, gate
+% overdrive VOV (from SPICE .op simulation) and W/L.
+
+\section{Design Schematic}
+Text of design schematic
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Calculation of Key Design Parameters - Page 3-6
+
+% Calculation of key design parameters, such as transconductances, bias
+% currents, etc. This is the most important section of your report for giving
+% critical discussion! Compare the most relevant hand calculated values with
+% final SPICE values in a table and discuss discrepancies (percentage
+% differences will be clear, you need to show you understand them). Make sure to
+% include the total power dissipation of your design (calculated value and SPICE
+% result). The lowest power designs will not automatically score the highest
+% grades. The methodology you used to justify your design choices and component
+% values is far more important (see section on point distribution below).
+
+\section{Calculation of Key Design Parameters}
+Text of calculating key design parameters
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bode Diagrams - Page 7
+
+% Simulated Bode Plots of A(jw), magnitude and phase. Clearly annotate the
+% achieved gain and bandwidth. Annotate your hand-calculated values in the same
+% plots, noting any specific features of interest (either from the results
+% themselves or based on what you've learned in hand calculations or scripting
+% the design). Plots must be annotated with meaningful comments/observations.
+
+\section{Simulated Bode Plots}
+Text of bode plots
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Transient Response - Page 8
+
+% Show a transient simulation plot of the output for a 1 MHz, 1 µA sinusoida
+% input current. Make sure that there is no distortion.
+
+\section{Simulated Transient Response}
+Text of transient response
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Comments and Conclusions - Page 9
+
+% Comments and conclusion. Here, you can convey issues you may have had, or
+% things you have learned/not learned in this project.
+
+\section{Comments and Conclusion}
+Write your conclusion here.
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Spice Netlist - Appendix I
+
+% Final SPICE netlist and .op output. Include only the MOSFET and node voltage
+% listing from the .op output.
+
+\section{Appendix I}
+Netlist here
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bonus Problem - Appendix II - 5pg max
+
+% If you attempt the bonus problem, describe the limitations of the original
+% circuit and your proposed changes to the architecture of this circuit. Draw a
+% schematic diagram of your final design with new architecture (follow
+% instructions similar to those for page 2) and explain how it helps you achieve
+% the new bonus specs. Include the simulated bode plots of A(jw), magnitude and
+% phase, annotating the new gain and bandwidth you achieved. On the final page,
+% include a table comparing the given specs, the achieved specs using given
+% architecture, and the achieved specs for your new architecture.
+
+\section{Appendix II}
+Bonus problem here
+
+
+\end{document}
