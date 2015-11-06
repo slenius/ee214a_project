@@ -26,7 +26,7 @@ vss   n_vss     0     -2.5
 
 * Defining the input current source
 ** For ac simulation uncomment the following 2 lines**
-Iin   n_iin    0     ac    100n
+Iin   n_iin    0     ac    1
 
 ** For transient simulation uncomment the following 2 lines**
 *Iin   n_iin    0    sin(0 0.5u 1e6)
@@ -45,15 +45,15 @@ CL    n_vout    0         'p_CL'
 MN1    n_iin    n_bias_n  n_vss     n_vss     nmos114 w=2u  l=2u
 MN2    n_x      0         n_iin     n_vss     nmos114 w=2u  l=2u
 MP3    n_x      n_bias_p  n_vdd     n_vdd     pmos114 w=2u  l=2u
-R1     n_vdd    n_x       1e9
-R2     n_x      0         1e9
+R1     n_vdd    n_x       12.5k
+R2     n_x      0         12.5k
 
 *** Vy/Vx = V(n_y) / V(n_x) use "n_y" as the node label for Vy ***
 MP4    n_w      n_x       n_vdd     n_vdd     pmos114 w=2u  l=2u
 MP5    n_y      0         n_w       n_vdd     pmos114 w=2u  l=2u
 MN6    n_y      n_bias_n  n_vss     n_vss     nmos114 w=2u  l=2u
-R3     n_y      0         1e9
-R4     n_y      n_vss     1e9
+R3     n_y      0         18k
+R4     n_y      n_vss     9.6k
 
 *** Vz/Vy = V(n_z) / V(n_y) use "n_z"" as the node label for Vz ***
 MN7    n_z      n_y       n_vss     n_vss     nmos114 w=2u  l=2u
@@ -64,8 +64,8 @@ MN9    n_vout   n_bias_n  n_vss     n_vss     nmos114 w=2u  l=2u
 MN10   n_vdd    n_z       n_vout    n_vss     nmos114 w=2u  l=2u
 
 *** Your Bias Circuitry goes here ***
-v_bias_n n_bias_n n_vss 0.7
-v_bias_p n_bias_p n_vdd -0.7
+v_bias_n n_bias_n n_vss 0.65
+v_bias_p n_bias_p n_vdd -0.65
 
 
 *** defining the analysis ***
