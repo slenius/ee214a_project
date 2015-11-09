@@ -45,8 +45,8 @@ CL    n_vout    0         'p_CL'
 MN1    n_iin    n_bias_n  n_vss     n_vss     nmos114 w=2u  l=2u
 MN2    n_x      0         n_iin     n_vss     nmos114 w=2u  l=2u
 MP3    n_x      n_bias_p  n_vdd     n_vdd     pmos114 w=2u  l=2u
-R1     n_vdd    n_x       12.5k
-R2     n_x      0         12.5k
+R1     n_vdd    n_x       9.6k
+R2     n_x      0         18k
 
 *** Vy/Vx = V(n_y) / V(n_x) use "n_y" as the node label for Vy ***
 MP4    n_w      n_x       n_vdd     n_vdd     pmos114 w=2u  l=2u
