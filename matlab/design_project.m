@@ -311,13 +311,15 @@ for i = 1:length(stages)
             i-1, stages{i}.t * 1e9, max_tc * 1e9);
   end
 end
-plot_stages(stages);
-
 
 % Check Total Power
 max_pow = 2e-3;
 if total.pow > max_pow
   warning('Total power too high, %0.1f > %0.1f', total.pow, max_pow);
 end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make Interesting Plots
+
 plot_stages(stages);
 
