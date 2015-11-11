@@ -50,7 +50,7 @@ R2     n_x      0         10k
 
 *** Vy/Vx = V(n_y) / V(n_x) use "n_y" as the node label for Vy ***
 MP4    n_w      n_x       n_vdd     n_vdd     pmos114 w=8u  l=2u
-MP5    n_y      0         n_w       n_vdd     pmos114 w=8u  l=2u
+MP5    n_y      0         n_w       n_vdd     pmos114 w=16u  l=2u
 MN6    n_y      n_bias_n  n_vss     n_vss     nmos114 w=180u  l=2u
 R3     n_y      0         22.8k
 R4     n_y      n_vss     6.4k
