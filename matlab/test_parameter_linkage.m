@@ -4,7 +4,7 @@ close all
 dp = load_defaults();
 
 % First test the linkage of sizing MN1, MN2 and MN3
-size_sweep = 2e-6 : 1e-6 : 20e-6;
+size_sweep = 2e-6 : 1e-6 : 50e-6;
 for i = 1:length(size_sweep)
   stage_1_size_link = size_sweep(i);
   dp.MN1.w = stage_1_size_link;
@@ -25,5 +25,4 @@ legend('Vx', 'MN2 1/gm');
 xlabel('Size(um)')
 ylabel(ax(1), 'Voltage(V)')
 ylabel(ax(2), 'Resistance(ohms)')
-
 

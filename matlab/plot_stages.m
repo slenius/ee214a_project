@@ -11,14 +11,20 @@ function plot_stages(stages)
   ylabel('Tau (ns)');
   
   figure;
+  hold on;
+  last = 0;
   for i = 1:length(stages)
-    y(i) = stages{i}.pow * 1e6;
+    y1(i) = stages{i}.pow * 1e6;
+    y2(i) = last + y1(i);
     x(i) = i-1;
+    last = y2(i);
   end
-  plot(x, y, 'b*-')
+  plot(x, y1, 'b*-')
+  plot(x, y2, 'r*-')
   title('Stage Power Contributions')
   xlabel('Stage');
   ylabel('Power (uw)');
+  legend('Stage Power', 'Total Power');
   
   
   figure;
