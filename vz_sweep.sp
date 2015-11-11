@@ -42,30 +42,19 @@ CL    n_vout    0         'p_CL'
 ***	d	g	s	b	n/pmos114	w	l
 
 *** Vx/Iin = V(n_x) / Iin, use "n_x" as the node label for Vx ***
-MN1    n_iin    n_bias_n  n_vss     n_vss     nmos114 w=16u  l=2u
-MN2    n_x      0         n_iin     n_vss     nmos114 w=16u  l=2u
-MP3    n_x      n_bias_p  n_vdd     n_vdd     pmos114 w=32u  l=2u
-R1     n_vdd    n_x       15k
-R2     n_x      0         10k
 
 *** Vy/Vx = V(n_y) / V(n_x) use "n_y" as the node label for Vy ***
-MP4    n_w      n_x       n_vdd     n_vdd     pmos114 w=8u  l=2u
-MP5    n_y      0         n_w       n_vdd     pmos114 w=8u  l=2u
-MN6    n_y      n_bias_n  n_vss     n_vss     nmos114 w=180u  l=2u
-R3     n_y      0         22.8k
-R4     n_y      n_vss     6.4k
 
 *** Vz/Vy = V(n_z) / V(n_y) use "n_z"" as the node label for Vz ***
-MN7    n_z      n_y       n_vss     n_vss     nmos114 w=25u  l=2u
-MP8    n_z      n_z       n_vdd     n_vdd     pmos114 w=2u  l=2u
 
 *** Vout/Vz = V(n_vout) / V(n_z) use "n_vout" as the node label for Vout ***
-MN9    n_vout   n_bias_n  n_vss     n_vss     nmos114 w=8u  l=2u
-MN10   n_vdd    n_z       n_vout    n_vss     nmos114 w=8u  l=2u
+MN9    n_vout   n_bias_n  n_vss     n_vss     nmos114 w=2u  l=2u
+MN10   n_vdd    n_z       n_vout    n_vss     nmos114 w=2u  l=2u
 
 *** Your Bias Circuitry goes here ***
 v_bias_n n_bias_n n_vss 0.65
-v_bias_p n_bias_p n_vdd -0.65
+
+v_sweep n_z 0 1.75
 
 
 *** defining the analysis ***
@@ -74,6 +63,8 @@ v_bias_p n_bias_p n_vdd -0.65
 
 ** For ac simulation uncomment the following line**
 .ac dec 1k 100 1g
+.dc v_sweep 1.1 1.85 0.05
+
 
 .measure ac gainmax_vout max vdb(n_vout)
 .measure ac f3db_vout when vdb(n_vout)='gainmax_vout-3'
@@ -86,6 +77,8 @@ v_bias_p n_bias_p n_vdd -0.65
 
 .measure ac gainmax_vz max vdb(n_z)
 .measure ac f3db_vz when vdb(n_z)='gainmax_vz-3'
+
+.print v(n_z, n_vout) v(n_vdd, n_vout) gmo(MN10) gmbo(MN10) vth(MN10)
 
 ** For transient simulation uncomment the following line **
 *.tran 0.01u 4u
