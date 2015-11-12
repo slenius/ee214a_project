@@ -24,11 +24,11 @@
 .param p_stage_1_size_n = 16u
 .param p_stage_2_size_n = 4u
 .param p_stage_3_size_n = 4u
-.param p_stage_4_size_n = 8u
+.param p_stage_4_size_n = 32u
 
 .param p_stage_1_size_p = 32u
 .param p_stage_2_size_p = 8u
-.param p_stage_3_size_p = 8u
+.param p_stage_3_size_p = 4u
 
 * defining the supply voltages
 vdd   n_vdd     0     2.5
@@ -62,8 +62,8 @@ R2     n_x      0         40k
 MP4    n_w      n_x       n_vdd     n_vdd     pmos114 w='p_stage_2_size_p'  l=2u
 MP5    n_y      0         n_w       n_vdd     pmos114 w='p_stage_2_size_p'  l=2u
 MN6    n_y      n_bias_n  n_vss     n_vss     nmos114 w='p_stage_2_size_n'  l=2u
-R3     n_y      0         40k
-R4     n_y      n_vss     40k
+R3     n_y      0         45k
+R4     n_y      n_vss     45k
 
 *** Vz/Vy = V(n_z) / V(n_y) use "n_z"" as the node label for Vz ***
 MN7    n_z      n_y       n_vss     n_vss     nmos114 w='p_stage_3_size_n'  l=2u
