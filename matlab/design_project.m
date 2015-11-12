@@ -9,28 +9,9 @@ function dp = design_project(dp, make_plots, print_warnings)
 % number of iterations for  vt calc
 iter = 10;
 
-% Inputs
-vov = dp.vov;
-
-%dp.R1 = dp.r_eq_1 / (dp.ee214a.Vtn0 + vov);
-%dp.R2 = dp.R1 * dp.r_eq_1 / (dp.R1 - dp.r_eq_1);
-
-dp.R1 = 15e3;
-dp.R2 = 10e3;
-
-%dp.R4 = dp.r_eq_2 / (dp.ee214a.Vtn0 + vov);
-%dp.R3 = dp.R4 * dp.r_eq_2 / (dp.R4 - dp.r_eq_2);
-
-% Vy goal - 1.95V
-%dp.R4 = dp.r_eq_2 / (-1.95+2.5);
-%dp.R3 = dp.R4 * dp.r_eq_2 / (dp.R4 - dp.r_eq_2);
-
-dp.R3 = 22.8e3;
-dp.R4 = 6.4e3;
-
 % Calculate v_bias_gen values
-V_bias_gen_pmos = dp.vdd - vov + dp.ee214a.Vtp0;
-V_bias_gen_nmos = dp.vss + vov + dp.ee214a.Vtn0;
+dp.V_bias_gen_pmos = dp.vdd - dp.vov + dp.ee214a.Vtp0;
+dp.V_bias_gen_nmos = dp.vss + dp.vov + dp.ee214a.Vtn0;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Compute vt values
@@ -60,10 +41,10 @@ dp.MN10 = calc_k(dp.MN10);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Compute what we can for bias transistors
 
-dp.MN1.vov = V_bias_gen_nmos - dp.MN1.vt - dp.vss;
-dp.MP3.vov = dp.vdd - V_bias_gen_pmos + dp.MP3.vt;
-dp.MN6.vov = V_bias_gen_nmos - dp.MN6.vt - dp.vss;
-dp.MN9.vov = V_bias_gen_nmos - dp.MN9.vt - dp.vss;
+dp.MN1.vov = dp.V_bias_gen_nmos - dp.MN1.vt - dp.vss;
+dp.MP3.vov = dp.vdd - dp.V_bias_gen_pmos + dp.MP3.vt;
+dp.MN6.vov = dp.V_bias_gen_nmos - dp.MN6.vt - dp.vss;
+dp.MN9.vov = dp.V_bias_gen_nmos - dp.MN9.vt - dp.vss;
 
 dp.MN1 = calc_idsat(dp.MN1);
 dp.MP3 = calc_idsat(dp.MP3);
@@ -81,8 +62,8 @@ for i = 1:iter
   dp.MN2 = calc_vt(dp.Vi, dp.vss, dp.MN2);
   dp.Vi = -sqrt(dp.MN1.k) * dp.MN1.vov / sqrt(dp.MN2.k) - dp.MN2.vt;
 end
-dp.Vx = (dp.MP3.id - dp.MN1.id + dp.vdd / dp.R1) * dp.r_eq_1;
-   
+dp.Vx = (dp.MP3.id - dp.MN1.id + dp.vdd / dp.R1.val) * parallel_r(dp.R1.val, dp.R2.val);
+
 % Stage 2
 dp.MP4.vov = dp.Vx - dp.vdd - dp.MP4.vt;
 dp.MP4 = calc_idsat(dp.MP4);
@@ -94,8 +75,8 @@ for i = 1:iter
   dp.Vw = -sqrt(dp.MP4.k) * dp.MP4.vov / sqrt(dp.MP5.k) - dp.MP5.vt;
 end
 
-dp.Vy = (dp.MP4.id - dp.MN6.id + dp.vss / dp.R4) * dp.r_eq_2;
-%dp.Vy = resistor_div(dp.R3, dp.R4, 0, dp.vss);
+dp.Vy = (dp.MP4.id - dp.MN6.id + dp.vss / dp.R4.val) * parallel_r(dp.R3.val, dp.R4.val);
+%dp.Vy = resistor_div(dp.R3.val, dp.R4.val, 0, dp.vss);
 
 % Stage 3
 dp.MN7.vov = dp.Vy - dp.vss - dp.MN7.vt;
@@ -120,18 +101,18 @@ dp.MN10 = calc_idsat(dp.MN10);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Check requirements for saturation
 
-dp.MN1 = check_sat(dp.Vi, V_bias_gen_nmos, dp.vss, dp.MN1);
+dp.MN1 = check_sat(dp.Vi, dp.V_bias_gen_nmos, dp.vss, dp.MN1);
 dp.MN2 = check_sat(dp.Vx, 0, dp.Vi, dp.MN1);
-dp.MP3 = check_sat(dp.Vx, V_bias_gen_pmos, dp.vdd, dp.MP3);
+dp.MP3 = check_sat(dp.Vx, dp.V_bias_gen_pmos, dp.vdd, dp.MP3);
 
 dp.MP4 = check_sat(dp.Vw, dp.Vx, dp.vdd, dp.MP4);
 dp.MP5 = check_sat(dp.Vy, 0, dp.Vw, dp.MP5);
-dp.MN6 = check_sat(dp.Vy, V_bias_gen_nmos, dp.vss, dp.MN6);
+dp.MN6 = check_sat(dp.Vy, dp.V_bias_gen_nmos, dp.vss, dp.MN6);
 
 dp.MN7 = check_sat(dp.Vz, dp.Vy, dp.vss, dp.MN7);
 dp.MP8 = check_sat(dp.Vz, dp.Vz, dp.vdd, dp.MP8);
 
-dp.MN9 = check_sat(dp.Vo, V_bias_gen_nmos, dp.vss, dp.MN9);
+dp.MN9 = check_sat(dp.Vo, dp.V_bias_gen_nmos, dp.vss, dp.MN9);
 dp.MN10 = check_sat(dp.vdd, dp.Vz, dp.Vo, dp.MN10);
 
 dp.all_sat = dp.MN1.sat_ok & dp.MN2.sat_ok & dp.MP3.sat_ok & dp.MP4.sat_ok & dp.MP5.sat_ok & ...
@@ -145,6 +126,8 @@ dp.MP4 = calc_gm(dp.MP4);
 dp.MN7 = calc_gm(dp.MN7);
 dp.MP8 = calc_gm(dp.MP8);
 dp.MN10 = calc_gm(dp.MN10);
+
+dp.MN10 = calc_gmb(dp.vss, dp.Vo, dp.MN10);
 
 dp.MN2 = calc_caps_sat(dp.MN2);
 dp.MP3 = calc_caps_sat(dp.MP3);
@@ -166,74 +149,86 @@ dp.MP8 = calc_ro(dp.MP8);
 dp.MN9 = calc_ro(dp.MN9);
 dp.MN10 = calc_ro(dp.MN10);
 
+dp.R1 = calc_r_size(dp.R1);
+dp.R2 = calc_r_size(dp.R2);
+dp.R3 = calc_r_size(dp.R3);
+dp.R4 = calc_r_size(dp.R4);
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Stage 0 Iin -> Vin
 
-stage_0.gain = 1;
-stage_0.gain_db = 20 * log10(abs(stage_0.gain));
-stage_0.c = dp.Cin + dp.MN2.cgs;
-stage_0.r = parallel_r(dp.MN1.ro, 1/dp.MN2.gm);
-stage_0 = calculate_stage_speed(stage_0);
-stage_0.pow = 0;
+dp.stage_0.gain = 1;
+dp.stage_0.gain_db = 20 * log10(abs(dp.stage_0.gain));
+dp.stage_0.c = dp.Cin + dp.MN2.cgs;
+dp.stage_0.r = parallel_r(dp.MN1.ro, 1/dp.MN2.gm);
+dp.stage_0 = calculate_stage_speed(dp.stage_0);
+dp.stage_0.pow = 0;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Stage 1 Vin -> dp.Vx
 
-stage_1.gain = parallel_r(dp.R1, dp.R2);
-stage_1.gain_db = 20 * log10(abs(stage_1.gain));
-stage_1.c = dp.MP4.cgs + dp.MN2.cgd + dp.MP3.cgd;
-stage_1.r = parallel_r(dp.R1, dp.R2, dp.MP3.ro, dp.MN2.gm * dp.MN2.ro * dp.MN1.ro);
-stage_1 = calculate_stage_speed(stage_1);
-stage_1.pow = dp.MN1.id * (dp.vdd-dp.vss) + dp.vdd^2 / (dp.R1+dp.R2);
+dp.stage_1.gain = parallel_r(dp.R1.val, dp.R2.val);
+dp.stage_1.gain_db = 20 * log10(abs(dp.stage_1.gain));
+dp.stage_1.c = dp.MP4.cgs + dp.MN2.cgd + dp.MP3.cgd;
+dp.stage_1.r = parallel_r(dp.R1.val, dp.R2.val, dp.MP3.ro, dp.MN2.gm * dp.MN2.ro * dp.MN1.ro);
+dp.stage_1 = calculate_stage_speed(dp.stage_1);
+dp.stage_1.pow = dp.MN1.id * (dp.vdd-dp.vss) + dp.vdd^2 / (dp.R1.val+dp.R2.val);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Stage 2 dp.Vx -> dp.Vy
 
-stage_2.gain = -dp.MP4.gm * parallel_r(dp.R3, dp.R4);
-stage_2.gain_db = 20 * log10(abs(stage_2.gain));
-stage_2.c = dp.MN7.cgs + dp.MP5.cgd + dp.MN6.cgd;
-stage_2.r = parallel_r(dp.R3, dp.R4, dp.MN6.ro);
-stage_2 = calculate_stage_speed(stage_2);
-stage_2.pow = dp.MN6.id * (dp.vdd-dp.vss) + dp.vss^2 / (dp.R3+dp.R4);
+dp.stage_2.gain = -dp.MP4.gm * parallel_r(dp.R3.val, dp.R4.val);
+dp.stage_2.gain_db = 20 * log10(abs(dp.stage_2.gain));
+dp.stage_2.c = dp.MN7.cgs + dp.MP5.cgd + dp.MN6.cgd;
+dp.stage_2.r = parallel_r(dp.R3.val, dp.R4.val, dp.MN6.ro);
+dp.stage_2 = calculate_stage_speed(dp.stage_2);
+dp.stage_2.pow = dp.MN6.id * (dp.vdd-dp.vss) + dp.vss^2 / (dp.R3.val+dp.R4.val);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Stage 3 dp.Vy -> dp.Vz
 
-stage_3.gain = -dp.MN7.gm / dp.MP8.gm;
-stage_3.gain_db = 20 * log10(abs(stage_3.gain));
-stage_3.c = dp.MP8.cgs + dp.MN10.cgs;
-stage_3.r = 1 / dp.MP8.gm;
-stage_3 = calculate_stage_speed(stage_3);
-stage_3.pow = dp.MN7.id * (dp.vdd-dp.vss);
+dp.stage_3.gain = -dp.MN7.gm / dp.MP8.gm;
+dp.stage_3.gain_db = 20 * log10(abs(dp.stage_3.gain));
+dp.stage_3.c = dp.MP8.cgs + dp.MN10.cgs;
+dp.stage_3.r = 1 / dp.MP8.gm;
+dp.stage_3 = calculate_stage_speed(dp.stage_3);
+dp.stage_3.pow = dp.MN7.id * (dp.vdd-dp.vss);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Stage 4 dp.Vz -> dp.Vo
 
-stage_4.gain = dp.MN10.gm / (dp.MN10.gm * 1.1 + 1/dp.Rl);
-stage_4.gain_db = 20 * log10(abs(stage_4.gain));
-stage_4.c = dp.MN9.cgd + dp.Cl;
-stage_4.r = dp.Rl;
-stage_4 = calculate_stage_speed(stage_4);
-stage_4.pow = dp.MN9.id * (dp.vdd-dp.vss) + dp.Vo^2 / (dp.Rl);
+dp.stage_4.Rl_tot = parallel_r(dp.Rl, 1/dp.MN10.gmb, dp.MN10.ro);
+dp.stage_4.gain = dp.MN10.gm / (dp.MN10.gm + 1/dp.stage_4.Rl_tot);
+dp.stage_4.gain_db = 20 * log10(abs(dp.stage_4.gain));
+dp.stage_4.c = dp.MN9.cgd + dp.Cl;
+dp.stage_4.r = parallel_r(dp.Rl, 1/dp.MN10.gmb, 1/dp.MN10.gm);
+dp.stage_4 = calculate_stage_speed(dp.stage_4);
+dp.stage_4.pow = dp.MN9.id * (dp.vdd-dp.vss) + dp.Vo^2 / (dp.Rl);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Total Gain
 
-stages = {stage_0, stage_1, stage_2, stage_3, stage_4};
+stages = {dp.stage_0, dp.stage_1, dp.stage_2, dp.stage_3, dp.stage_4};
 
-total.gain = 1;
+dp.total.gain = 1;
 for i = 1:length(stages)
-  total.gain = total.gain * stages{i}.gain;
+  dp.total.gain = dp.total.gain * stages{i}.gain;
 end
-total.gain_db = 20 * log10(abs(total.gain));
+dp.total.gain_db = 20 * log10(abs(dp.total.gain));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Power
 
-total.pow = 0;
+dp.total.pow = 0;
 for i = 1:length(stages)
-  total.pow = total.pow + stages{i}.pow;
+  dp.total.pow = dp.total.pow + stages{i}.pow;
 end
+
+dp.total.t = 0;
+for i = 1:length(stages)
+  dp.total.t = dp.total.t + stages{i}.t;
+end
+dp.total.f = 1 / (2 * pi() * dp.total.t);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Requirements
@@ -251,8 +246,8 @@ if print_warnings
 
   % Check Total Gain
   min_gain = 90;
-  if total.gain_db < min_gain
-    warning('Total gain too low, %0.1f < %0.1f', total.gain_db, min_gain);
+  if dp.total.gain_db < min_gain
+    warning('Total gain too low, %0.1f < %0.1f', dp.total.gain_db, min_gain);
   end
 
   % Check Stage Speed
@@ -266,8 +261,8 @@ if print_warnings
 
   % Check Total Power
   max_pow = 2e-3;
-  if total.pow > max_pow
-    warning('Total power too high, %0.1f > %0.1f', total.pow, max_pow);
+  if dp.total.pow > max_pow
+    warning('Total power too high, %0.1f > %0.1f', dp.total.pow*1e3, max_pow*1e3);
   end
 
 end
