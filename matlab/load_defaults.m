@@ -1,4 +1,4 @@
-function dp = load_defaults(vov, stage_1, stage_2, stage_3, stage_4, rg1, rg2)
+function dp = load_defaults(vov, stage_1, stage_2, stage_3, stage_4, rg1, rg2, g3)
 
   % EE214 Parameters
   dp.ee214a.unCox = 50e-6;
@@ -104,7 +104,7 @@ function dp = load_defaults(vov, stage_1, stage_2, stage_3, stage_4, rg1, rg2)
   dp.MN7.w = stage_3_size;
   dp.MN7.l = 2e-6;
 
-  dp.MP8.w = stage_3_size;
+  dp.MP8.w = min(stage_3_size * g3, 2e-6);
   dp.MP8.l = 2e-6;
 
   dp.MN9.w = stage_4_size;

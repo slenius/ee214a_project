@@ -4,9 +4,11 @@ function t = calc_gmb(vb, vs, t)
   gamma = 0.6;
 
   t.vbs = vb - vs;
-  if (-2 * phi - t.vbs) > 0
-    t.gmb = gamma * t.gm / (2 * sqrt(-2 * phi - t.vbs));
+  if (2 * phi - t.vbs) > 0
+    t.gmb = gamma * t.gm / (2 * sqrt(2 * phi - t.vbs));
   else
     t.gmb = 0;
   end
+  
+  t.gm_prime = t.gm + t.gmb;
 end

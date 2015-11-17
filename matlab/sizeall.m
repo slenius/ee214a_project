@@ -1,16 +1,25 @@
-function score = evaluate_candidate(x, dbg)
+function score = sizeall(x, dbg)
 
   vov = x(1);
-  stage_1 = x(2);
-  stage_2 = x(3);
-  stage_3 = x(4);
-  stage_4 = x(5);
-  rg1 = x(6);
-  rg2 = x(7);
-  g3 = x(8);
 
-  dp = load_defaults(vov, stage_1, stage_2, stage_3, stage_4, rg1, rg2, g3);
+  dp = load_defaults(vov, 2, 2, 2, 2, 10000, 10000, 1);
   
+  dp.vov = x(1);
+  dp.MN1.w = x(2)*1e-6;
+  dp.MN1.w = x(3)*1e-6;
+  dp.MP3.w = x(4)*1e-6;
+  dp.MP4.w = x(5)*1e-6;
+  dp.MP5.w = x(6)*1e-6;
+  dp.MN6.w = x(7)*1e-6;
+  dp.MN7.w = x(8)*1e-6;
+  dp.MP8.w = x(9)*1e-6;
+  dp.MN9.w = x(10)*1e-6;
+  dp.MN10.w = x(11)*1e-6;
+  
+  dp.R1.val = x(12);
+  dp.R2.val = x(13);
+  dp.R3.val = x(14);
+  dp.R4.val = x(15);
   
   dp = design_project(dp, false, false);
 

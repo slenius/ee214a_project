@@ -128,7 +128,9 @@ dp.MP8 = calc_gm(dp.MP8);
 dp.MN10 = calc_gm(dp.MN10);
 
 dp.MN10 = calc_gmb(dp.vss, dp.Vo, dp.MN10);
+dp.MN2 = calc_gmb(dp.vss, dp.Vi, dp.MN2);
 
+dp.MN1 = calc_caps_sat(dp.MN1);
 dp.MN2 = calc_caps_sat(dp.MN2);
 dp.MP3 = calc_caps_sat(dp.MP3);
 dp.MP4 = calc_caps_sat(dp.MP4);
@@ -157,58 +159,63 @@ dp.R4 = calc_r_size(dp.R4);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Stage 0 Iin -> Vin
 
-dp.stage_0.gain = 1;
-dp.stage_0.gain_db = 20 * log10(abs(dp.stage_0.gain));
-dp.stage_0.c = dp.Cin + dp.MN2.cgs;
-dp.stage_0.r = parallel_r(dp.MN1.ro, 1/dp.MN2.gm);
-dp.stage_0 = calculate_stage_speed(dp.stage_0);
-dp.stage_0.pow = 0;
+dp.stages{1}.gain = 1;
+dp.stages{1}.gain_db = 20 * log10(abs(dp.stages{1}.gain));
+dp.stages{1}.c = dp.Cin + dp.MN2.cgs + dp.MN1.cgd + 20e-15;
+dp.stages{1}.r = parallel_r(dp.MN1.ro, 1/dp.MN2.gm_prime);
+dp.stages{1} = calculate_stage_speed(dp.stages{1});
+dp.stages{1}.pow = 0;
+dp.stages{1}.name = 'Vi';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Stage 1 Vin -> dp.Vx
 
-dp.stage_1.gain = parallel_r(dp.R1.val, dp.R2.val);
-dp.stage_1.gain_db = 20 * log10(abs(dp.stage_1.gain));
-dp.stage_1.c = dp.MP4.cgs + dp.MN2.cgd + dp.MP3.cgd;
-dp.stage_1.r = parallel_r(dp.R1.val, dp.R2.val, dp.MP3.ro, dp.MN2.gm * dp.MN2.ro * dp.MN1.ro);
-dp.stage_1 = calculate_stage_speed(dp.stage_1);
-dp.stage_1.pow = dp.MN1.id * (dp.vdd-dp.vss) + dp.vdd^2 / (dp.R1.val+dp.R2.val);
+dp.stages{2}.gain = parallel_r(dp.R1.val, dp.R2.val);
+dp.stages{2}.gain_db = 20 * log10(abs(dp.stages{2}.gain));
+dp.stages{2}.c = dp.MP4.cgs + dp.MN2.cgd + dp.MP3.cgd;
+dp.stages{2}.r = parallel_r(dp.R1.val, dp.R2.val, dp.MP3.ro, dp.MN2.gm * dp.MN2.ro * dp.MN1.ro);
+dp.stages{2} = calculate_stage_speed(dp.stages{2});
+dp.stages{2}.pow = dp.MN1.id * (dp.vdd-dp.vss) + dp.vdd^2 / (dp.R1.val+dp.R2.val);
+dp.stages{2}.name = 'Vx';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Stage 2 dp.Vx -> dp.Vy
 
-dp.stage_2.gain = -dp.MP4.gm * parallel_r(dp.R3.val, dp.R4.val);
-dp.stage_2.gain_db = 20 * log10(abs(dp.stage_2.gain));
-dp.stage_2.c = dp.MN7.cgs + dp.MP5.cgd + dp.MN6.cgd;
-dp.stage_2.r = parallel_r(dp.R3.val, dp.R4.val, dp.MN6.ro);
-dp.stage_2 = calculate_stage_speed(dp.stage_2);
-dp.stage_2.pow = dp.MN6.id * (dp.vdd-dp.vss) + dp.vss^2 / (dp.R3.val+dp.R4.val);
+dp.stages{3}.gain = -dp.MP4.gm * parallel_r(dp.R3.val, dp.R4.val);
+dp.stages{3}.gain_db = 20 * log10(abs(dp.stages{3}.gain));
+dp.stages{3}.c = dp.MN7.cgs + dp.MP5.cgd + dp.MN6.cgd;
+dp.stages{3}.r = parallel_r(dp.R3.val, dp.R4.val, dp.MN6.ro);
+dp.stages{3} = calculate_stage_speed(dp.stages{3});
+dp.stages{3}.pow = dp.MN6.id * (dp.vdd-dp.vss) + dp.vss^2 / (dp.R3.val+dp.R4.val);
+dp.stages{3}.name = 'Vy';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Stage 3 dp.Vy -> dp.Vz
 
-dp.stage_3.gain = -dp.MN7.gm / dp.MP8.gm;
-dp.stage_3.gain_db = 20 * log10(abs(dp.stage_3.gain));
-dp.stage_3.c = dp.MP8.cgs + dp.MN10.cgs;
-dp.stage_3.r = 1 / dp.MP8.gm;
-dp.stage_3 = calculate_stage_speed(dp.stage_3);
-dp.stage_3.pow = dp.MN7.id * (dp.vdd-dp.vss);
+dp.stages{4}.gain = -dp.MN7.gm / dp.MP8.gm;
+dp.stages{4}.gain_db = 20 * log10(abs(dp.stages{4}.gain));
+dp.stages{4}.c = dp.MP8.cgs + dp.MN10.cgs;
+dp.stages{4}.r = 1 / dp.MP8.gm;
+dp.stages{4} = calculate_stage_speed(dp.stages{4});
+dp.stages{4}.pow = dp.MN7.id * (dp.vdd-dp.vss);
+dp.stages{4}.name = 'Vz';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Stage 4 dp.Vz -> dp.Vo
 
-dp.stage_4.Rl_tot = parallel_r(dp.Rl, 1/dp.MN10.gmb, dp.MN10.ro);
-dp.stage_4.gain = dp.MN10.gm / (dp.MN10.gm + 1/dp.stage_4.Rl_tot);
-dp.stage_4.gain_db = 20 * log10(abs(dp.stage_4.gain));
-dp.stage_4.c = dp.MN9.cgd + dp.Cl;
-dp.stage_4.r = parallel_r(dp.Rl, 1/dp.MN10.gmb, 1/dp.MN10.gm);
-dp.stage_4 = calculate_stage_speed(dp.stage_4);
-dp.stage_4.pow = dp.MN9.id * (dp.vdd-dp.vss) + dp.Vo^2 / (dp.Rl);
+dp.stages{5}.Rl_tot = parallel_r(dp.Rl, 1/dp.MN10.gmb, dp.MN10.ro);
+dp.stages{5}.gain = dp.MN10.gm / (dp.MN10.gm + 1/dp.stages{5}.Rl_tot);
+dp.stages{5}.gain_db = 20 * log10(abs(dp.stages{5}.gain));
+dp.stages{5}.c = dp.MN9.cgd + dp.Cl;
+dp.stages{5}.r = parallel_r(dp.Rl, 1/dp.MN10.gmb, 1/dp.MN10.gm);
+dp.stages{5} = calculate_stage_speed(dp.stages{5});
+dp.stages{5}.pow = dp.MN9.id * (dp.vdd-dp.vss) + dp.Vo^2 / (dp.Rl);
+dp.stages{5}.name = 'Vo';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Total Gain
 
-stages = {dp.stage_0, dp.stage_1, dp.stage_2, dp.stage_3, dp.stage_4};
+stages = {dp.stages{1}, dp.stages{2}, dp.stages{3}, dp.stages{4}, dp.stages{5}};
 
 dp.total.gain = 1;
 for i = 1:length(stages)
@@ -229,6 +236,8 @@ for i = 1:length(stages)
   dp.total.t = dp.total.t + stages{i}.t;
 end
 dp.total.f = 1 / (2 * pi() * dp.total.t);
+
+dp.total.fom = dp.total.f/1e6 * dp.total.gain/1e3 * (1e-3 / dp.total.pow);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Requirements
@@ -265,6 +274,13 @@ if print_warnings
     warning('Total power too high, %0.1f > %0.1f', dp.total.pow*1e3, max_pow*1e3);
   end
 
+  % Check Figure Of Merit
+  min_fom = 1350;
+  if dp.total.fom < min_fom
+    warning('Figure of Merit too low, %0.0f < %0.0f', dp.total.fom, min_fom);
+  end
+  
+  
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
