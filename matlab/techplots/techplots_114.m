@@ -13,6 +13,9 @@ pgmro = evalsig(tech_data, 'pgmro');
 pft = evalsig(tech_data, 'pft');
 pidw = evalsig(tech_data, 'pidw');
 vth_mp1 = evalsig(tech_data, 'vth_mp1');
+wp = evalsig(tech_data, 'wp');
+lp = evalsig(tech_data, 'lp');
+
 
 
 save('techplots.mat');

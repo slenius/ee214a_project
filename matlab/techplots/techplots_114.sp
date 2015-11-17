@@ -22,7 +22,6 @@ mp1      0  vp  vdp vdp  pmos114  w=Wp l=Lp
 
 .dc gs 0.5V 2.5V 10m Wp 2u 16u 2u
 
-
 .probe nov        = par('gs-vth(mn1)')
 .probe ngm_id     = par('gmo(mn1)/i(mn1)')
 .probe gm = par('gmo(mn1)')
@@ -60,7 +59,8 @@ mp1      0  vp  vdp vdp  pmos114  w=Wp l=Lp
 .probe pcdd       = par('cddbo(mp1)')
 .probe pcdg       = par('cdgbo(mp1)')
 .probe gs = par('gs')
-
+.probe wp = par('Wp')
+.probe lp = par('Lp')
 
 .options dccap post brief
 *.include ee314_hspice.txt

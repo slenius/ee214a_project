@@ -1,0 +1,17 @@
+* "simulator" "HSPICE" 
+* "version" "I-2013.12-SP2 64-BIT"
+* "format" "HSP"
+* "rundate" "19:50:21 11/16/2015 "
+* "netlist" "techplots_114.sp "
+* "runtitle" ""
+* time =    0.            
+* temperature =   25.0000        
+*** BEGIN: Saved Operating Point ***                     
+.option 
++ gmindc=   1.0000p       
+.nodeset
++ vdn =   1.2500        
++ vdp =   1.2500        
++ vn =   1.0000        
++ vp = 250.0000m       
+***   END: Saved Operating Point ***                     
