@@ -46,7 +46,7 @@ R2	n_x	0	  20k
 MP4	n_w	n_x	  n_vdd	 n_vdd	pmos114	w=16u	l=2u
 MP5	n_y	0	  n_w	 n_vdd	pmos114	w=16u	l=2u
 MN6	n_y	n_bias_n  n_vss	 n_vss	nmos114	w=8u	l=2u
-R3	n_y	0	  40k 
+R3	n_y	0	  40k
 R4	n_y	n_vss	  40k
 
 *** Vz/Vy = V(n_z) / V(n_y), use "n_z" as the node label for Vz ***
@@ -64,10 +64,10 @@ MP100	n_bias_n n_bias_p n_vdd  n_vdd	pmos114 w=4u	l=2u
 MP200	n_bias_p n_bias_p n_vdd  n_vdd	pmos114 w=4u	l=2u
 MN300	n_bias_n n_bias_n n_vss  n_vss	nmos114 w=4u	l=2u
 MN400	n_bias_p n_bias_n n_biasr2   n_vss	nmos114 w=8u	l=2u
-R200	n_biasr2 n_vss	8k  	 
+R200	n_biasr2 n_vss	8k
 MP800	n_biasn9 n_bias_n n_vdd  n_vdd pmos114 w=2u	l=4u
 MN700	n_biasn9 n_bias_n n_vss  n_vss nmos114 w=8u	l=2u
-MN900   n_bias_p n_biasn9 n_vss  n_vss nmos114 w=4u	l=2u 
+MN900   n_bias_p n_biasn9 n_vss  n_vss nmos114 w=4u	l=2u
 
 
 *** defining the analysis ***

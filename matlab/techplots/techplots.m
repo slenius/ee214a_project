@@ -1,5 +1,5 @@
-%addpath('/usr/class/ee214/matlab/hspice_toolbox');
-addpath('HspiceToolbox');
+addpath('/usr/class/ee214/matlab/hspice_toolbox');
+%addpath('HspiceToolbox');
 tech_data = loadsig('techplots_114.sw0');
 lssig(tech_data)
 ngmid = evalsig(tech_data, 'ngm_id');
