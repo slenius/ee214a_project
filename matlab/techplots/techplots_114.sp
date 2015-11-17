@@ -20,7 +20,7 @@ mp1      0  vp  vdp vdp  pmos114  w=Wp l=Lp
 
 **** The modified DC
 
-.dc gs 0.5V 2.5V 10m Wp 2u 16u 2u
+.dc gs 0.5V 2.5V 10m Lp 2u 1u 8u
 
 .probe nov        = par('gs-vth(mn1)')
 .probe ngm_id     = par('gmo(mn1)/i(mn1)')
@@ -61,6 +61,8 @@ mp1      0  vp  vdp vdp  pmos114  w=Wp l=Lp
 .probe gs = par('gs')
 .probe wp = par('Wp')
 .probe lp = par('Lp')
+
+*.print dc par(Wp) i(mn1)
 
 .options dccap post brief
 *.include ee314_hspice.txt
