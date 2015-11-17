@@ -2,8 +2,8 @@
 .include /usr/class/ee114/hspice/ee114_hspice.sp
 
 .param gs=1
-.param Lp = 1u
-.param Wp = 10u
+.param Lp = 2u
+.param Wp = 2u
 
 vgsn     vn  0       dc 'gs'
 vdsn     vdn 0       dc 1.25
@@ -20,7 +20,7 @@ mp1      0  vp  vdp vdp  pmos114  w=Wp l=Lp
 
 **** The modified DC
 
-.dc gs 0.5V 2.5V 10m Lp 1u 5u 1u
+.dc gs 0.5V 2.5V 10m Wp 2u 16u 2u
 
 
 .probe nov        = par('gs-vth(mn1)')
