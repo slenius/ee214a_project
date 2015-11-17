@@ -20,7 +20,7 @@ mp1      0  vp  vdp vdp  pmos114  w=Wp l=Lp
 
 **** The modified DC
 
-.dc gs 0.5V 2.5V 10m Lp 2u 1u 8u
+.dc gs 0.5V 2.5V 10m Lp 2u 8u 1u
 
 .probe nov        = par('gs-vth(mn1)')
 .probe ngm_id     = par('gmo(mn1)/i(mn1)')
