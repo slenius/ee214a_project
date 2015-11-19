@@ -4,7 +4,7 @@
 * Please fill in the specification achieved by your circuit
 * before you submit the netlist
 *************************************************************
-*sunetids of team members = lenius
+*sunetids of team members = ukankana, lenius
 * The specification that this script achieves are:
 * Power		2.35mW    <= 2.00 mW      Over Spec
 * Gain		30.8kOhm  >=  30.0 kOhm   Meets Spec
