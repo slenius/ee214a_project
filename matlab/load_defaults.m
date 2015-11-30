@@ -1,4 +1,4 @@
-function dp = load_defaults(vov, stage_1, stage_2, stage_3, stage_4, rg1, rg2, g3)
+function dp = load_defaults(vov, stage_1, stage_2, stage_3, stage_4, rg1, rg2, n_z, vy_goal, mn9)
 
   % EE214 Parameters
   dp.ee214a.unCox = 50e-6;
@@ -16,11 +16,14 @@ function dp = load_defaults(vov, stage_1, stage_2, stage_3, stage_4, rg1, rg2, g
   
   dp.vov = vov;
   
+  %warning('vx hack')
   dp.Vx_goal = dp.vdd + dp.ee214a.Vtp0 - dp.vov;
+  %dp.Vx_goal = dp.vdd + dp.ee214a.Vtp0 - 0.250;
   dp.r_eq_1 = rg1;
   [dp.R1.val, dp.R2.val] = calc_rt_rb(dp.vdd, 0, dp.Vx_goal, dp.r_eq_1);
   
-  dp.Vy_goal = dp.vss + dp.ee214a.Vtn0 + dp.vov;
+  %dp.Vy_goal = dp.vss + dp.ee214a.Vtn0 + dp.vov;
+  dp.Vy_goal = vy_goal;
   dp.r_eq_2 = rg2;
   [dp.R3.val, dp.R4.val] = calc_rt_rb(0, dp.vss, dp.Vy_goal, dp.r_eq_2);
   
@@ -83,34 +86,38 @@ function dp = load_defaults(vov, stage_1, stage_2, stage_3, stage_4, rg1, rg2, g
   stage_3_size = stage_3 * 1e-6;
   stage_4_size = stage_4 * 1e-6;
   
+  dp.n_z = n_z;
+
   dp.MN1.w = stage_1_size;
   dp.MN1.l = 2e-6;
 
-  dp.MN2.w = stage_1_size;
-  dp.MN2.l = 2e-6;
+  dp.MN2.w = stage_1_size*2;
+  dp.MN2.l = 1e-6;
+
 
   dp.MP3.w = stage_1_size * 2;
   dp.MP3.l = 2e-6;
   
-  dp.MP4.w = stage_2_size * 2;
-  dp.MP4.l = 2e-6;
 
-  dp.MP5.w = stage_2_size * 2;
-  dp.MP5.l = 2e-6;
+  dp.MP4.w = stage_2_size;
+  dp.MP4.l = 1e-6;
+
+  dp.MP5.w = stage_2_size;
+  dp.MP5.l = 1e-6;
 
   dp.MN6.w = stage_2_size;
   dp.MN6.l = 2e-6;
 
   dp.MN7.w = stage_3_size;
-  dp.MN7.l = 2e-6;
+  dp.MN7.l = 1e-6;
 
-  dp.MP8.w = min(stage_3_size * g3, 2e-6);
-  dp.MP8.l = 2e-6;
+  dp.MP8.w = stage_3_size * dp.n_z;
+  dp.MP8.l = 1e-6;
 
-  dp.MN9.w = stage_4_size;
+  dp.MN9.w = mn9 * 2e-6;;
   dp.MN9.l = 2e-6;
 
-  dp.MN10.w = 8e-6;
-  dp.MN10.l = 2e-6;
+  dp.MN10.w = stage_4_size;
+  dp.MN10.l = 1e-6;
 
 end

@@ -102,7 +102,7 @@ dp.MN10 = calc_idsat(dp.MN10);
 % Check requirements for saturation
 
 dp.MN1 = check_sat(dp.Vi, dp.V_bias_gen_nmos, dp.vss, dp.MN1);
-dp.MN2 = check_sat(dp.Vx, 0, dp.Vi, dp.MN1);
+dp.MN2 = check_sat(dp.Vx, 0, dp.Vi, dp.MN2);
 dp.MP3 = check_sat(dp.Vx, dp.V_bias_gen_pmos, dp.vdd, dp.MP3);
 
 dp.MP4 = check_sat(dp.Vw, dp.Vx, dp.vdd, dp.MP4);
@@ -121,11 +121,14 @@ dp.all_sat = dp.MN1.sat_ok & dp.MN2.sat_ok & dp.MP3.sat_ok & dp.MP4.sat_ok & dp.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Compute gms, caps and ros
 
+dp.MN1 = calc_gm(dp.MN1);
 dp.MN2 = calc_gm(dp.MN2);
+dp.MP3 = calc_gm(dp.MP3);
 dp.MP4 = calc_gm(dp.MP4);
 dp.MN7 = calc_gm(dp.MN7);
 dp.MP8 = calc_gm(dp.MP8);
 dp.MN10 = calc_gm(dp.MN10);
+
 
 dp.MN10 = calc_gmb(dp.vss, dp.Vo, dp.MN10);
 dp.MN2 = calc_gmb(dp.vss, dp.Vi, dp.MN2);
@@ -161,7 +164,7 @@ dp.R4 = calc_r_size(dp.R4);
 
 dp.stages{1}.gain = 1;
 dp.stages{1}.gain_db = 20 * log10(abs(dp.stages{1}.gain));
-dp.stages{1}.c = dp.Cin + dp.MN2.cgs + dp.MN1.cgd + 20e-15;
+dp.stages{1}.c = dp.Cin + dp.MN2.cgs + dp.MN1.cgd + dp.MN1.cdb;
 dp.stages{1}.r = parallel_r(dp.MN1.ro, 1/dp.MN2.gm_prime);
 dp.stages{1} = calculate_stage_speed(dp.stages{1});
 dp.stages{1}.pow = 0;
@@ -172,7 +175,7 @@ dp.stages{1}.name = 'Vi';
 
 dp.stages{2}.gain = parallel_r(dp.R1.val, dp.R2.val);
 dp.stages{2}.gain_db = 20 * log10(abs(dp.stages{2}.gain));
-dp.stages{2}.c = dp.MP4.cgs + dp.MN2.cgd + dp.MP3.cgd;
+dp.stages{2}.c = dp.MP4.cgs + dp.MN2.cgd + dp.MP3.cgd + dp.MN2.cdb;
 dp.stages{2}.r = parallel_r(dp.R1.val, dp.R2.val, dp.MP3.ro, dp.MN2.gm * dp.MN2.ro * dp.MN1.ro);
 dp.stages{2} = calculate_stage_speed(dp.stages{2});
 dp.stages{2}.pow = dp.MN1.id * (dp.vdd-dp.vss) + dp.vdd^2 / (dp.R1.val+dp.R2.val);
@@ -180,10 +183,13 @@ dp.stages{2}.name = 'Vx';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Stage 2 dp.Vx -> dp.Vy
+% need this for miller
+dp.stages{4}.gain = -dp.MN7.gm / dp.MP8.gm;
+dp.c_miller = dp.MN7.cgd * (1 - dp.stages{4}.gain);
 
 dp.stages{3}.gain = -dp.MP4.gm * parallel_r(dp.R3.val, dp.R4.val);
 dp.stages{3}.gain_db = 20 * log10(abs(dp.stages{3}.gain));
-dp.stages{3}.c = dp.MN7.cgs + dp.MP5.cgd + dp.MN6.cgd;
+dp.stages{3}.c = dp.MN7.cgs + dp.MP5.cgd + dp.MN6.cgd + dp.c_miller;
 dp.stages{3}.r = parallel_r(dp.R3.val, dp.R4.val, dp.MN6.ro);
 dp.stages{3} = calculate_stage_speed(dp.stages{3});
 dp.stages{3}.pow = dp.MN6.id * (dp.vdd-dp.vss) + dp.vss^2 / (dp.R3.val+dp.R4.val);
@@ -194,7 +200,7 @@ dp.stages{3}.name = 'Vy';
 
 dp.stages{4}.gain = -dp.MN7.gm / dp.MP8.gm;
 dp.stages{4}.gain_db = 20 * log10(abs(dp.stages{4}.gain));
-dp.stages{4}.c = dp.MP8.cgs + dp.MN10.cgs;
+dp.stages{4}.c = dp.MP8.cgs + dp.MN10.cgs + dp.MN7.cdb + dp.MP8.cdb;
 dp.stages{4}.r = 1 / dp.MP8.gm;
 dp.stages{4} = calculate_stage_speed(dp.stages{4});
 dp.stages{4}.pow = dp.MN7.id * (dp.vdd-dp.vss);
@@ -203,13 +209,14 @@ dp.stages{4}.name = 'Vz';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Stage 4 dp.Vz -> dp.Vo
 
-dp.stages{5}.Rl_tot = parallel_r(dp.Rl, 1/dp.MN10.gmb, dp.MN10.ro);
+dp.stages{5}.Rl_tot = 1 / dp.MN10.gm + parallel_r(dp.Rl, 1/dp.MN10.gmb, dp.MN10.ro);
 dp.stages{5}.gain = dp.MN10.gm / (dp.MN10.gm + 1/dp.stages{5}.Rl_tot);
 dp.stages{5}.gain_db = 20 * log10(abs(dp.stages{5}.gain));
 dp.stages{5}.c = dp.MN9.cgd + dp.Cl;
 dp.stages{5}.r = parallel_r(dp.Rl, 1/dp.MN10.gmb, 1/dp.MN10.gm);
 dp.stages{5} = calculate_stage_speed(dp.stages{5});
 dp.stages{5}.pow = dp.MN9.id * (dp.vdd-dp.vss) + dp.Vo^2 / (dp.Rl);
+dp.stages{5}.zero = dp.MN10.gm / dp.MN10.cgs;
 dp.stages{5}.name = 'Vo';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -224,6 +231,30 @@ end
 dp.total.gain_db = 20 * log10(abs(dp.total.gain));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Plot Bandwidth
+w = logspace(1, 12, 1000);
+
+h = ones(1, length(w));
+for s = 1:length(dp.stages)
+  h = h .* (1 ./ (1 + dp.stages{s}.r .* dp.stages{s}.c .* w * 1i));
+end
+
+h = h .* (1 + w * 1i ./dp.stages{5}.zero);
+
+dp.bode.w = w;
+dp.bode.f = w / (2*pi());
+dp.bode.mag = abs(h);
+dp.bode.phase = angle(h) * 180/pi();
+[mag, index] = unique(dp.bode.mag);
+f = dp.bode.f(index);
+if and(max(mag) > sqrt(2)/2, min(mag) < sqrt(2)/2)
+  dp.bode.n3db = interp1(mag, f, sqrt(2)/2);
+else
+  dp.bode.n3db = nan;
+end
+  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Power
 
 dp.total.pow = 0;
@@ -235,7 +266,8 @@ dp.total.t = 0;
 for i = 1:length(stages)
   dp.total.t = dp.total.t + stages{i}.t;
 end
-dp.total.f = 1 / (2 * pi() * dp.total.t);
+%dp.total.f = 1 / (2 * pi() * dp.total.t);
+dp.total.f = dp.bode.n3db;
 
 dp.total.fom = dp.total.f/1e6 * dp.total.gain/1e3 * (1e-3 / dp.total.pow);
 

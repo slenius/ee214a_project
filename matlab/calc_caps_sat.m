@@ -6,4 +6,6 @@ function t = calc_caps_sat(t)
   t.cov = Cov_prime * t.w;
   t.cgs = 2/3 * t.w * t.l * Cox + t.cov;
   t.cgd = t.cov;
+  t.cdb = 0.33 * t.cgs;
+  t.csb = 0.33 * t.cgs;
 end
