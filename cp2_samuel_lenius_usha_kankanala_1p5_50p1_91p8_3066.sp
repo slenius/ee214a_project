@@ -47,7 +47,7 @@ CL      n_vout  0       'p_CL'
 *** Vx/Iin = V(n_x) / Iin, use "n_x" as the node label for Vx ***
 MN1     n_iin   n_bias_n  n_vss   n_vss nmos114 w=3.0u l=2.0u
 MN2     n_x     0         n_iin  n_vss  nmos114 w=12.0u l=1.0u
-MP3     n_x     n_bias_p  n_vdd  n_vdd  pmos114 w=6.0u l=2.0ui
+MP3     n_x     n_bias_p  n_vdd  n_vdd  pmos114 w=6.0u l=2.0u
 R1      n_vdd   n_x       26300
 R2      n_x     0         28500
 
