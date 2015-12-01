@@ -28,6 +28,8 @@ vss	n_vss	0	-2.5
 ** For ac simulation uncomment the following 2 lines**
 Iin	n_iin	0	ac	1
 
+Cin     n_iin   0     'p_Cin'
+
 * Defining the load
 RL	n_vout	0	'p_RL'
 CL	n_vout	0	'p_CL'
@@ -36,9 +38,9 @@ CL	n_vout	0	'p_CL'
 ***	d	g	s	b	n/pmos114	w	l
 
 *** Vx/Iin = V(n_x) / Iin, use "n_x" as the node label for Vx ***
-MN1	n_iin	n_bias_n  n_vss	 n_vss	nmos114 w=8u	l=2u
-MN2	n_x	0	  n_iin  n_vss	nmos114 w=8u	l=2u
-MP3	n_x	n_bias_p  n_vdd	 n_vdd	pmos114	w=8u	l=2u
+MN1	n_iin	n_bias_n  n_vss	 n_vss	nmos114 w=4u	l=2u
+MN2	n_x	0	  n_iin  n_vss	nmos114 w=4u	l=2u
+MP3	n_x	n_bias_p  n_vdd	 n_vdd	pmos114	w=4u	l=2u
 R1	n_vdd	n_x	  20k
 R2	n_x	0	  20k
 
@@ -77,18 +79,23 @@ MN900   n_bias_p n_biasn9 n_vss  n_vss nmos114 w=4u	l=2u
 ** For ac simulation uncomment the following line**
 .ac dec 1k 100 1g
 
-.measure ac gainmax_vout max vdb(n_vout)
-.measure ac f3db_vout when vdb(n_vout)='gainmax_vout-3'
+.measure ac gainmax_vin max vdb(n_iin)
+.measure ac f3db_vin when vdb(n_iin)='gainmax_vin-3'
 
 .measure ac gainmax_vx max vdb(n_x)
 .measure ac f3db_vx when vdb(n_x)='gainmax_vx-3'
+
+.measure ac gainmax_vw max vdb(n_w)
+.measure ac f3db_vw when vdb(n_w)='gainmax_vw-3'
 
 .measure ac gainmax_vy max vdb(n_y)
 .measure ac f3db_vy when vdb(n_y)='gainmax_vy-3'
 
 .measure ac gainmax_vz max vdb(n_z)
-.measure ac f3db_vz when vdb(n_z)='gainmax_vz-3' 			  	
+.measure ac f3db_vz when vdb(n_z)='gainmax_vz-3'
 
+.measure ac gainmax_vout max vdb(n_vout)
+.measure ac f3db_vout when vdb(n_vout)='gainmax_vout-3'
 ** For transient simulation uncomment the following line **
 *.tran 0.01u 4u
 
