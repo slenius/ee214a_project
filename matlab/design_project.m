@@ -288,28 +288,28 @@ if print_warnings
   % Check Total Gain
   min_gain = 90;
   if dp.total.gain_db < min_gain
-    warning('Total gain too low, %0.1f < %0.1f', dp.total.gain_db, min_gain);
+    %warning('Total gain too low, %0.1f < %0.1f', dp.total.gain_db, min_gain);
   end
 
   % Check Stage Speed
   max_tc = 1.59e-9;
   for i = 1:length(stages)
     if stages{i}.t > max_tc
-      warning('Stage %d Time Constant too high, %0.1fns > %0.1fns', ...
-              i-1, stages{i}.t * 1e9, max_tc * 1e9);
+      %warning('Stage %d Time Constant too high, %0.1fns > %0.1fns', ...
+      %        i-1, stages{i}.t * 1e9, max_tc * 1e9);
     end
   end
 
   % Check Total Power
   max_pow = 2e-3;
   if dp.total.pow > max_pow
-    warning('Total power too high, %0.1f > %0.1f', dp.total.pow*1e3, max_pow*1e3);
+    %warning('Total power too high, %0.1f > %0.1f', dp.total.pow*1e3, max_pow*1e3);
   end
 
   % Check Figure Of Merit
   min_fom = 1350;
   if dp.total.fom < min_fom
-    warning('Figure of Merit too low, %0.0f < %0.0f', dp.total.fom, min_fom);
+    %warning('Figure of Merit too low, %0.0f < %0.0f', dp.total.fom, min_fom);
   end
   
   

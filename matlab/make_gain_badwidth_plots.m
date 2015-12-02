@@ -1,7 +1,7 @@
 close all
 clear all
 
-vov = 0.15:0.025:0.85;
+vov = 0.15:0.025:1.0;
 
 %Notes
 
@@ -17,37 +17,23 @@ vov = 0.15:0.025:0.85;
 % turn design into one thats parameterized by goals for the pole frequencies
 
 
-% from lecture 18 pg 13
-N = 1:5;
-stage_bw_frac = sqrt(2.^(1./N) - 1);
-stage_speed_goal = 120e6 .* stage_bw_frac ./ min(stage_bw_frac);
-
-%tau_stages = [.30 .40 .05 .25] * 1.77e-9 * 2;
-%stage_speed_goal = 1 ./ (2 .* pi() .* tau_stages)
-
-speed_goal_i = stage_speed_goal(1);
-speed_goal_x = stage_speed_goal(2);
-%speed_goal_w = stage_speed_goal(3);
-speed_goal_y = stage_speed_goal(3);
-speed_goal_z = stage_speed_goal(4);
-speed_goal_o = stage_speed_goal(5);
-
-speed_goal_i = 115e6;
-speed_goal_x = 170e6;
-speed_goal_y = 150e6;
+speed_goal_i = 50e6;
+speed_goal_x = 250e6;
+speed_goal_y = 300e6;
 speed_goal_z = 80e6;
 speed_goal_o = 220e6;
 
 for i = 1:length(vov)
-  s1 = compute_stage_i_size(speed_goal_i, vov(i));
+  s1 = compute_stage_i_size(speed_goal_i, vov(i))
+  %s1 = 3;
   %w1 = 8;
   s2 = 8;
   s3 = 2;
-  s4 = 16;
-  n_z = 4;
-  vov_y = compute_stage_z_vov(speed_goal_z, s3*1e-6, s3*1e-6, s4*1e-6, 2e-6, n_z);
-  vy_goal = vov_y - 2.0;
-  
+  s4 = 28;
+  n_z = 1;
+  %vov_y = compute_stage_z_vov(speed_goal_z, s3*1e-6, s3*1e-6, s4*1e-6, 2e-6, n_z);
+  %vy_goal = vov_y - 2.0;
+  vy_goal = -1.4;
   
   dp = load_defaults(vov(i), s1, s2, s3, s4, 20000, 50000, n_z, vy_goal, s4);
   rx = compute_stage_x_res(speed_goal_x, dp.MN2.w, dp.MN2.l, dp.MP4.w, dp.MP4.l);
@@ -74,7 +60,7 @@ for i = 1:length(vov)
     Vz(i) = nan;
     Vo(i) = nan;
   end
-  if abs(vov(i) - 0.55) < 0.001
+  if abs(vov(i) - 1) < 0.001
     make_spice_file(dp, 'matlab.sp');
     fi = dp.stages{1}.f
     fx = dp.stages{2}.f

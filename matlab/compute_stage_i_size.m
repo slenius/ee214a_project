@@ -4,7 +4,7 @@ function w = compute_stage_i_size(speed, vov)
   unCox = 50e-6;
   cin = 2.2e-13;
   L = 2e-6;
-  n = 1;
+  n = 6;
   
   % given vov ,speed and L, solve for W
 

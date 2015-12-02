@@ -1,4 +1,4 @@
-function dp = load_defaults(vov, stage_1, stage_2, stage_3, stage_4, rg1, rg2, n_z, vy_goal, mn9)
+function dp = load_defaults(vov, stage_1, stage_2, stage_3, stage_4, rg1, rg2, n_z, vx_goal, vy_goal, mn9)
 
   % EE214 Parameters
   dp.ee214a.unCox = 50e-6;
@@ -15,25 +15,6 @@ function dp = load_defaults(vov, stage_1, stage_2, stage_3, stage_4, rg1, rg2, n
   dp.vss = -2.5;
   
   dp.vov = vov;
-  
-  %warning('vx hack')
-  dp.Vx_goal = dp.vdd + dp.ee214a.Vtp0 - dp.vov;
-  %dp.Vx_goal = dp.vdd + dp.ee214a.Vtp0 - 0.250;
-  dp.r_eq_1 = rg1;
-  [dp.R1.val, dp.R2.val] = calc_rt_rb(dp.vdd, 0, dp.Vx_goal, dp.r_eq_1);
-  
-  %dp.Vy_goal = dp.vss + dp.ee214a.Vtn0 + dp.vov;
-  dp.Vy_goal = vy_goal;
-  dp.r_eq_2 = rg2;
-  [dp.R3.val, dp.R4.val] = calc_rt_rb(0, dp.vss, dp.Vy_goal, dp.r_eq_2);
-  
-
-  %dp.R4 = dp.r_eq_2 / (dp.ee214a.Vtn0 + vov);
-  %dp.R3 = dp.R4 * dp.r_eq_2 / (dp.R4 - dp.r_eq_2);
-
-  % Vy goal - 1.95V
-  %dp.R4 = dp.r_eq_2 / (-1.95+2.5);
-  %dp.R3 = dp.R4 * dp.r_eq_2 / (dp.R4 - dp.r_eq_2);
   
   % Transistor Definitions
   dp.MN1.type = 'nmos';
@@ -91,7 +72,7 @@ function dp = load_defaults(vov, stage_1, stage_2, stage_3, stage_4, rg1, rg2, n
   dp.MN1.w = stage_1_size;
   dp.MN1.l = 2e-6;
 
-  dp.MN2.w = stage_1_size*2;
+  dp.MN2.w = stage_1_size * 4;
   dp.MN2.l = 1e-6;
 
 
@@ -105,7 +86,7 @@ function dp = load_defaults(vov, stage_1, stage_2, stage_3, stage_4, rg1, rg2, n
   dp.MP5.w = stage_2_size;
   dp.MP5.l = 1e-6;
 
-  dp.MN6.w = stage_2_size;
+  dp.MN6.w = stage_2_size/2;
   dp.MN6.l = 2e-6;
 
   dp.MN7.w = stage_3_size;
@@ -114,10 +95,38 @@ function dp = load_defaults(vov, stage_1, stage_2, stage_3, stage_4, rg1, rg2, n
   dp.MP8.w = stage_3_size * dp.n_z;
   dp.MP8.l = 1e-6;
 
-  dp.MN9.w = mn9 * 2e-6;;
+  dp.MN9.w = 2e-6;
   dp.MN9.l = 2e-6;
 
   dp.MN10.w = stage_4_size;
   dp.MN10.l = 1e-6;
+  
+  
+  %warning('vx hack')
+  %dp.Vx_goal = dp.vdd + dp.ee214a.Vtp0 - dp.vov;
+  %dp.Vx_goal = dp.vdd + dp.ee214a.Vtp0 - 0.250;
+  dp.Vx_goal = vx_goal;
+  dp.r_eq_1 = rg1;
+  [dp.R1.val, dp.R2.val] = calc_rt_rb(dp.vdd, 0, dp.Vx_goal, dp.r_eq_1);
+  
+  %dp.Vy_goal = dp.vss + dp.ee214a.Vtn0 + dp.vov;
+  dp.Vy_goal = vy_goal;
+  dp.r_eq_2 = rg2;
+  [dp.R3.val, dp.R4.val] = calc_rt_rb(0, dp.vss, dp.Vy_goal, dp.r_eq_2);
+  
+  i4 = 1/2 * dp.ee214a.upCox * dp.MP4.w / dp.MP4.l * (2.5-dp.Vx_goal- 0.5)^2;
+  i6 = 1/2 * dp.ee214a.unCox * dp.MN6.w / dp.MN6.l * (vov)^2;
+  id = i4-i6;
+  %dp.R4.val = -(dp.r_eq_2 * dp.vss) /...
+  %      (id * dp.r_eq_2 - dp.Vy_goal);
+  %dp.R3.val = dp.R4.val * dp.r_eq_2 / (dp.R4.val - dp.r_eq_2);
+  
+
+  %dp.R4 = dp.r_eq_2 / (dp.ee214a.Vtn0 + vov);
+  %dp.R3 = dp.R4 * dp.r_eq_2 / (dp.R4 - dp.r_eq_2);
+
+  % Vy goal - 1.95V
+  %dp.R4 = dp.r_eq_2 / (-1.95+2.5);
+  %dp.R3 = dp.R4 * dp.r_eq_2 / (dp.R4 - dp.r_eq_2);
 
 end
