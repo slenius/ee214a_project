@@ -159,12 +159,14 @@ By making plots of the sum of tau for adjacent stages vs critical transistor siz
 \section{Design Schematic}
 
 {\centering
-	\includegraphics[page=1, angle=270, width=0.9\textwidth]{project_schematic.pdf}\par
+	\includegraphics[page=1, angle=270, width=0.88\textwidth]{project_schematic.pdf}\par
 }
 
 {\centering
-	\includegraphics[page=2, angle=270, width=0.9\textwidth]{project_schematic.pdf}\par
+	\includegraphics[page=2, angle=270, width=0.88\textwidth]{project_schematic.pdf}\par
 }
+
+\footnotetext[1]{Drawings also attached to end of appendix in full size}
 
 \pagebreak
 
@@ -498,25 +500,25 @@ Total Gain & 30.04k$\Omega$  & 34.66k$\Omega$   &  15.5\% & Error in estimating 
 
 \section{Comments and Conclusion}
 
-
+\subsection{Notes about Design}
 \begin{itemize}
-\item Resistors contribute to a large part of the overall gain. From 
-manufacturability perspective, passive components are not friendly and 
-also occupy more area on the chip.
-\item The output source follower stage is very sensitive to biasing due 
-to back gate effect. Small variations on Vz can drive the output to fall 
-out of desired common mode voltage or drive MN10 into cutoff region and 
-lose all the gain from previous stages.
-\item Any variations in supply voltage causes variation in Vov of MN7 
-directly (as the device is biased through R3 \& R4) causing Vz to vary 
-and thereby impacting the biasing of MN10 and gain.
-\item Common source stage with diode connected load attributes to miller 
-cap loading effect on cascade stage. This is limiting the gain of common 
+\item Resistors contribute to a large part of the overall gain. From manufacturability perspective, passive components are not friendly and 
+also occupy more area on the chip. We feel that while the large value resistors helped us achieve a high gain and low power that they result in a
+possibly overly acedemic design thats not suitable for actual production.
+\item The output source follower stage is very sensitive to biasing due to back gate effect. Small variations on $V_Z$ can drive the output to fall 
+out of desired common mode voltage or drive $MN_10$ into cutoff region and lose all the gain from previous stages.
+\item Any variations in supply voltage causes variation in Vov of MN7 directly (as the device is biased through R3 \& R4) causing $V_Z$ to vary 
+and thereby impacting the biasing of MN10 and gain. This is a great node to lose any and all PSRR.
+\item Common source stage with diode connected load attributes to miller cap loading effect on cascade stage. This is limiting the gain of common 
 source stage to smaller values.
-\item Since the output is single ended, it is susceptible to noise. 
-Differential configuration will be better.
+\item Since the output is single ended, it is susceptible to noise, a differential configuration will be better.
+ 
 \end{itemize}
 
+\subsection{Notes on Project}
+\begin{itemize}
+\item We found it very difficult to balance the many simultaneous requirements, and I felt that this was a very useful exercise that's directly applicable to industry, and not only to chip design. Many times I have found myself trying to explore design spaces that have myrid of opposing non-orthogonal requirements. I feel like I have learned interesting ways to approach these problems both mathematically and strategically.
+\end{itemize}
 \pagebreak
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -526,110 +528,32 @@ Differential configuration will be better.
 % listing from the .op output.
 
 \section{Appendix I}
-\begin{lstlisting}
-* Design Problem, ee114/214A-2015
-* Team Member 1 Name: Usha Kankanala
-* Team Member 2 Name: Samuel Lenius
-* Please fill in the specification achieved by your circuit
-* before you submit the netlist
-*************************************************************
-* sunetids of team members:
-*   ukankana@stanford.edu:  06091239
-*   lenius@stanford.edu:    06091240
-* The specification that this script achieves are:
-* Power         1.06mW    <= 2.00 mW      Meets Spec
-* Gain          34.6kOhm  >=  30.0 kOhm   Meets Spec
-* BandWidth     93.0MHz   >= 90.0 MHz     Meets Spec
-* FOM           3043      >= 1350         Meets Spec
-*************************************************************
+\subsection{SPICE Netlist}
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily}
 
-* Including the model file
-.include /usr/class/ee114/hspice/ee114_hspice.sp
+\lstset{numbers=left, language=C, style=customc}
+\lstinputlisting{../Final_Samuel_Lenius_Usha_Kankanala_1p0_34p6_93p0_3043.sp}
 
+\subsection{SPICE .op Output}
+\lstset{numbers=left, language=C, style=customc}
+\lstinputlisting{../Final_Samuel_Lenius_Usha_Kankanala_1p0_34p6_93p0_3043.op}
 
-* Defining Top level circuit parameters
-.param p_Cin = 220f
-.param p_CL  = 250f
-.param p_RL  = 20k
+\pagebreak
 
-* Defining the supply voltages
-vdd     n_vdd   0       2.5
-vss     n_vss   0       -2.5
+\subsection{Amplifier - Enlarged}
+\includegraphics[page=1, width=\textwidth]{project_schematic.pdf}
 
-*Defining the input current source
-** For ac simulation uncomment the following 2 lines**
-Iin     n_iin   0       ac      100n
-*Iin     n_iin   0       ac      1
+\pagebreak
 
-** For transient simulation uncomment the following 2 lines**
-*Iin    n_iin    0    sin(0 0.5u 1e6)
+\subsection{Bias Circuit - Enlarged}
+\includegraphics[page=2, width=\textwidth]{project_schematic.pdf}
 
-* Defining Input capacitance
-Cin    n_iin    0    'p_Cin'
-
-* Defining the load
-RL      n_vout  0       'p_RL'
-CL      n_vout  0       'p_CL'
-
-*** Your Trans-impedance Amplifier here ***
-***     d       g       s       b       n/pmos114       w       l
-
-*** Vx/Iin = V(n_x) / Iin, use "n_x" as the node label for Vx ***
-MN1     n_iin   n_bias_n  n_vss   n_vss nmos114 w=3.0u l=2.0u
-MN2     n_x     0         n_iin  n_vss  nmos114 w=28.0u l=1.0u
-MP3     n_x     n_bias_p  n_vdd  n_vdd  pmos114 w=6.0u l=2.0u
-R1      n_vdd   n_x       19200
-R2      n_x     0         20800
-
-*** Vy/Vx = V(n_y) / V(n_x), use "n_y" as the node label for Vy ***
-MP4     n_w     n_x       n_vdd  n_vdd  pmos114 w=6.0u l=1.0u
-MP5     n_y     0         n_w    n_vdd  pmos114 w=6.0u l=1.0u
-MN6     n_y     n_bias_n  n_vss  n_vss  nmos114 w=3.0u l=2.0u
-R3      n_y     0         168100
-R4      n_y     n_vss     34400
-
-*** Vz/Vy = V(n_z) / V(n_y), use "n_z" as the node label for Vz ***
-MN7     n_z     n_y       n_vss  n_vss  nmos114 w=2.0u l=1.0u
-MP8     n_z     n_z       n_vdd  n_vdd  pmos114 w=2.0u l=1.0u
-
-*** Vout/Vz = V(n_vout) / V(n_z), use "n_vout" as the node label for Vout ***
-MN9     n_vout  n_bias_n  n_vss  n_vss  nmos114 w=5.0u l=2.0u
-MN10    n_vdd   n_z       n_vout n_vss  nmos114 w=28.0u l=1.0u
-
-*** Your Bias Circuitry goes here ***
-MP100   n_bias_n n_bias_p n_vdd n_vdd  pmos114 w=4u  l=2u
-MP200   n_bias_p n_bias_p n_vdd n_vdd  pmos114 w=4u  l=2u
-MN300   n_bias_n n_bias_n n_vss n_vss  nmos114 w=2u  l=2u
-MN400   n_bias_p n_bias_n n_biasr2   n_vss  nmos114 w=4u l=2u
-R200    n_biasr2 n_vss  16.7k
-MP800   n_biasn9 n_bias_n n_vdd n_vdd pmos114 w=2u  l=9u
-MN700   n_biasn9 n_bias_n n_vss n_vss nmos114 w=5u  l=2u
-MN900   n_bias_p n_biasn9 n_vss n_vss nmos114 w=4u  l=2u
-
-*** defining the analysis ***
-.op
-.option post brief nomod
-
-** For ac simulation uncomment the following line**
-.ac dec 1k 100 1g
-
-.measure ac gainmax_vout max vdb(n_vout)
-.measure ac f3db_vout when vdb(n_vout)='gainmax_vout-3'
-
-.measure ac gainmax_vx max vdb(n_x)
-.measure ac f3db_vx when vdb(n_x)='gainmax_vx-3'
-
-.measure ac gainmax_vy max vdb(n_y)
-.measure ac f3db_vy when vdb(n_y)='gainmax_vy-3'
-
-.measure ac gainmax_vz max vdb(n_z)
-.measure ac f3db_vz when vdb(n_z)='gainmax_vz-3'
-
-** For transient simulation uncomment the following line **
-*.tran 0.01u 4u
-
-.end
-\end{lstlisting}
-%\lstinputlisting[caption=Scheduler, style=customc]{}
-
+\pagebreak
 \end{document}
