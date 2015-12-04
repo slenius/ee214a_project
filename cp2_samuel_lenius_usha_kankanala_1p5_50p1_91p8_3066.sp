@@ -67,11 +67,22 @@ MN9     n_vout  n_bias_n  n_vss  n_vss  nmos114 w=2.0u l=2.0u
 MN10    n_vdd   n_z       n_vout n_vss  nmos114 w=28.0u l=1.0u
 
 *** Your Bias Circuitry goes here ***
+
+* This design is a self-biasing delta-Vgs / constant gm reference with startup
+* circuit. The design was taken from lecture notes 14.
+
+* These transistors provide the PMOS bias
 MP100   n_bias_n n_bias_p n_vdd n_vdd  pmos114 w=4u  l=2u
 MP200   n_bias_p n_bias_p n_vdd n_vdd  pmos114 w=4u  l=2u
+
+* These transistors provide the NMOS bias and are the source of the delta
+* Vgs reference.
 MN300   n_bias_n n_bias_n n_vss n_vss  nmos114 w=2u  l=2u
 MN400   n_bias_p n_bias_n n_biasr2   n_vss  nmos114 w=4u l=2u
 R200    n_biasr2 n_vss  11.2k
+
+* These transistors are the startup circuit that enforces that it stay at
+* the upper stable point, as the system is bistable.
 MP800   n_biasn9 n_bias_n n_vdd n_vdd pmos114 w=2u  l=4u
 MN700   n_biasn9 n_bias_n n_vss n_vss nmos114 w=5u  l=2u
 MN900   n_bias_p n_biasn9 n_vss n_vss nmos114 w=4u  l=2u
