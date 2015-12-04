@@ -16,6 +16,10 @@ function dp = print_areas(dp)
   dp.b_total = sum_mos_area(dp.MP100, dp.MP200, dp.MN300, dp.MN400, dp.MN700, dp.MP800, dp.MN900);
   
   
+  core = dp.core_area*1e6
+  vnmos_bias= 1e6 * dp.a_nmos_bias
+  vpmos_bias= 1e6 * dp.a_pmos_bias
+  bias_gen= 1e6 * dp.b_total
   
   vnmos_bias_percent = 100 * dp.a_nmos_bias / dp.core_area
   vpmos_bias_percent = 100 * dp.a_pmos_bias / dp.core_area
