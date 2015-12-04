@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.4)  4 DEC 2015 06:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.4)  4 DEC 2015 07:04
 entering extended mode
 **C:/Users/Sam/Documents/git/ee214a_project/report/final_report.tex
 (C:/Users/Sam/Documents/git/ee214a_project/report/final_report.tex
@@ -501,10 +501,10 @@ File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
 )
 (../Final_Samuel_Lenius_Usha_Kankanala_1p0_34p6_93p0_3043.sp
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 48.
- [10])
-(../Final_Samuel_Lenius_Usha_Kankanala_1p0_34p6_93p0_3043.op [11] [12] [13]
-[14]) [15]
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 47.
+ [10] [11])
+(../Final_Samuel_Lenius_Usha_Kankanala_1p0_34p6_93p0_3043.op [12] [13] [14])
+[15]
 File: project_schematic.pdf Graphic file (type pdf)
  <use project_schematic.pdf, page 1>
 Package pdftex.def Info: project_schematic.pdf, page1 used on input line 551.
@@ -517,13 +517,13 @@ Package pdftex.def Info: project_schematic.pdf, page2 used on input line 556.
 (pdftex.def)             Requested size: 525.23788pt x 679.76707pt.
  [17] (final_report.aux) ) 
 Here is how much of TeX's memory you used:
- 8016 strings out of 493673
- 110185 string characters out of 3141536
- 595944 words of memory out of 3000000
- 11251 multiletter control sequences out of 15000+200000
+ 8020 strings out of 493673
+ 110307 string characters out of 3141536
+ 543944 words of memory out of 3000000
+ 11255 multiletter control sequences out of 15000+200000
  17428 words of font info for 46 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 50i,16n,54p,865b,1659s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 50i,16n,54p,865b,1691s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Sam\AppData\Local\MiKTeX\2.9\fonts\pk\ljfo
 ur\jknappen\ec\dpi600\ectt1000.pk> <C:\Users\Sam\AppData\Local\MiKTeX\2.9\fonts
 \pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\Sam\AppData\Local\MiKTeX\2
@@ -545,9 +545,9 @@ amsfonts/cm/cmr12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/ams
 fonts/cm/cmr8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfont
 s/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/
 cm/cmsy8.pfb>
-Output written on final_report.pdf (18 pages, 1002078 bytes).
+Output written on final_report.pdf (18 pages, 1005562 bytes).
 PDF statistics:
- 515 PDF objects out of 1000 (max. 8388607)
+ 516 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  51 words of extra memory for PDF output out of 10000 (max. 10000000)
 
