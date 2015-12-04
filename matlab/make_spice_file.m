@@ -32,9 +32,9 @@ function make_spice_file(dp, fname, bias)
     fprintf(f, 'MP200   n_bias_p n_bias_p n_vdd n_vdd  pmos114 w=4u  l=2u\n');
     fprintf(f, 'MN300   n_bias_n n_bias_n n_vss n_vss  nmos114 w=2u  l=2u\n');
     fprintf(f, 'MN400   n_bias_p n_bias_n n_biasr2   n_vss  nmos114 w=4u l=2u\n');
-    fprintf(f, 'R200    n_biasr2 n_vss  11.2k\n');
-    fprintf(f, 'MP800   n_biasn9 n_bias_n n_vdd n_vdd pmos114 w=2u  l=4u\n');
+    fprintf(f, 'R200    n_biasr2 n_vss  16.7k\n');
     fprintf(f, 'MN700   n_biasn9 n_bias_n n_vss n_vss nmos114 w=5u  l=2u\n');
+    fprintf(f, 'MP800   n_biasn9 n_bias_n n_vdd n_vdd pmos114 w=2u  l=9u\n');
     fprintf(f, 'MN900   n_bias_p n_biasn9 n_vss n_vss nmos114 w=4u  l=2u\n');
   else
     fprintf(f, 'v_bias_n n_bias_n n_vss %f\n', dp.V_bias_gen_nmos - dp.vss);

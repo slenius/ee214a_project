@@ -200,7 +200,8 @@ dp.stages{3}.name = 'Vy';
 
 dp.stages{4}.gain = -dp.MN7.gm / dp.MP8.gm;
 dp.stages{4}.gain_db = 20 * log10(abs(dp.stages{4}.gain));
-dp.stages{4}.c = dp.MP8.cgs + dp.MN10.cgs + dp.MN7.cdb + dp.MP8.cdb;
+%dp.stages{4}.c = dp.MP8.cgs + dp.MN10.cgs + dp.MN7.cdb + dp.MP8.cdb;
+dp.stages{4}.c = dp.MP8.cgs + dp.MN10.cgs;
 dp.stages{4}.r = 1 / dp.MP8.gm;
 dp.stages{4} = calculate_stage_speed(dp.stages{4});
 dp.stages{4}.pow = dp.MN7.id * (dp.vdd-dp.vss);
@@ -232,19 +233,21 @@ dp.total.gain_db = 20 * log10(abs(dp.total.gain));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Plot Bandwidth
-w = logspace(1, 12, 1000);
+f = logspace(2, 8, 1000);
+w = 2 * pi * f;
 
-h = ones(1, length(w));
-for s = 1:length(dp.stages)
-  h = h .* (1 ./ (1 + dp.stages{s}.r .* dp.stages{s}.c .* w * 1i));
-end
 
-h = h .* (1 + w * 1i ./dp.stages{5}.zero);
+dp.h = 1 ./ ...
+       ((1 + dp.stages{1}.r .* dp.stages{1}.c .* w * 1i) .* ...
+        (1 + dp.stages{2}.r .* dp.stages{2}.c .* w * 1i) .* ...
+        (1 + dp.stages{3}.r .* dp.stages{3}.c .* w * 1i) .* ...
+        (1 + dp.stages{4}.r .* dp.stages{4}.c .* w * 1i) .* ...
+        (1 + dp.stages{5}.r .* dp.stages{5}.c .* w * 1i));
 
 dp.bode.w = w;
 dp.bode.f = w / (2*pi());
-dp.bode.mag = abs(h);
-dp.bode.phase = angle(h) * 180/pi();
+dp.bode.mag = abs(dp.h);
+dp.bode.phase = angle(dp.h) * 180/pi();
 [mag, index] = unique(dp.bode.mag);
 f = dp.bode.f(index);
 if and(max(mag) > sqrt(2)/2, min(mag) < sqrt(2)/2)

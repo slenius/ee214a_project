@@ -72,7 +72,7 @@ function dp = load_defaults(vov, stage_1, stage_2, stage_3, stage_4, rg1, rg2, n
   dp.MN1.w = stage_1_size;
   dp.MN1.l = 2e-6;
 
-  dp.MN2.w = stage_1_size * 4;
+  dp.MN2.w = stage_1_size * 8;
   dp.MN2.l = 1e-6;
 
 
@@ -95,7 +95,7 @@ function dp = load_defaults(vov, stage_1, stage_2, stage_3, stage_4, rg1, rg2, n
   dp.MP8.w = stage_3_size * dp.n_z;
   dp.MP8.l = 1e-6;
 
-  dp.MN9.w = 2e-6;
+  dp.MN9.w = 5e-6;
   dp.MN9.l = 2e-6;
 
   dp.MN10.w = stage_4_size;
@@ -117,9 +117,9 @@ function dp = load_defaults(vov, stage_1, stage_2, stage_3, stage_4, rg1, rg2, n
   i4 = 1/2 * dp.ee214a.upCox * dp.MP4.w / dp.MP4.l * (2.5-dp.Vx_goal- 0.5)^2;
   i6 = 1/2 * dp.ee214a.unCox * dp.MN6.w / dp.MN6.l * (vov)^2;
   id = i4-i6;
-  %dp.R4.val = -(dp.r_eq_2 * dp.vss) /...
-  %      (id * dp.r_eq_2 - dp.Vy_goal);
-  %dp.R3.val = dp.R4.val * dp.r_eq_2 / (dp.R4.val - dp.r_eq_2);
+  dp.R4.val = -(dp.r_eq_2 * dp.vss) /...
+        (id * dp.r_eq_2 - dp.Vy_goal);
+  dp.R3.val = dp.R4.val * dp.r_eq_2 / (dp.R4.val - dp.r_eq_2);
   
 
   %dp.R4 = dp.r_eq_2 / (dp.ee214a.Vtn0 + vov);
