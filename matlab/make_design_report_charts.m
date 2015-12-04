@@ -310,7 +310,7 @@ title('Design Project Gain Magnitude Plot');
 % t = text
 s = sprintf('  Low F Gain = %0.0f ohms\n', max(abs(v_n_vout)));
 s = strcat('\uparrow', s);
-t = text(1000,20000,{s; '    Estimated 30090'});
+t = text(1e5,20000,{s; '    Estimated 30090'});
 set(t, 'FontSize', 12);
 t = text(1e7,1000,{'Z and Out gain as expected';...
                 'Z Actual - 1.440';...
