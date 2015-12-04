@@ -11,6 +11,7 @@
 \usepackage{subfig}
 \usepackage{float}
 \usepackage{stackengine}
+\usepackage{listings}
 %\usepackage[demo]{graphicx}
 %\usepackage{caption}
 %\usepackage{subcaption}
@@ -53,17 +54,40 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Performance Summary Block - Page 0
 
-\begin{abstract}
-  Area Breakdown:
-  \begin{addmargin}[1em]{0em}
-  \begin{itemize}
-    \item PMOS Bias Gen: 25\%
-    \item NMOS Bias Gen: 25\%
-    \item Core circuit: 25\%
-    \item Resistors: 25\%
-  \end{itemize}
-  \end{addmargin}
-\end{abstract}
+\begin{table}[h]
+	\centering
+	\begin{tabular}{ | l | l | l |}
+		\hline
+		\textbf{Specfications} & Given Spec & Achieved Spec\\
+		\hline
+			Gain & 30k$\Omega$  &  34.7k$\Omega$ \\
+		\hline
+			Bandwidth & 90MHz  &  93MHz \\
+		\hline
+			Power & 2.0mW  &  1.0mW \\
+		\hline
+			FOM & 1350  &  3043 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{ | l | l | l |}
+		\hline
+		\textbf{Area Breakdown} & $\%$ Core Area & Area (um)\\
+		\hline
+			Core Area & 100\% & 112$\mu$m\textsuperscript{2}  \\
+		\hline
+			VNMOS-bias & 19.6\% & 22$\mu$m\textsuperscript{2} \\
+		\hline
+			VPMOS-bias  & 10.7\%  & 12$\mu$m\textsuperscript{2} \\
+		\hline
+			Bias Generator & 73.1\% &  82$\mu$m\textsuperscript{2} \\
+		\hline
+	\end{tabular}
+\end{table}
 
 \pagebreak
 
@@ -79,18 +103,17 @@
 % these 25 Points.
 
 \section{Design Outline}
-
-\paragraph
+\par
 Our approach to this design was to first develop sizing ratios of the transistors and their DC relationships to Vx, Vy, Vz and Vo.
 We developed the equations necessary to `program' those voltages and to develop what their reasonable ranges are.
 Here are some graphs that show the relationships between the output common mode voltage and Vz, and then Vz to Vy given our sizing decisions.
-We developed a MATLAB program to quickly estimate critical parameters for a given design, to allow easy investigation of parametric variation.
+We developed a MATLAB program to quickly estimate critical parameters for a given design, to allow easy investigation of parametric variation.\par
 
 \begin{figure}[H]
 	\footnotesize
-	\stackunder[5pt]{\includegraphics[width=0.4\textwidth]{cmv_vs_vz.png}}{}
+	\stackunder[5pt]{\includegraphics[width=0.5\textwidth]{cmv_vs_vz.png}}{}
 	\hfill
-	\stackunder[5pt]{\includegraphics[width=0.4\textwidth]{cmv_vs_vz.png}}{}
+	\stackunder[5pt]{\includegraphics[width=0.5\textwidth]{cmv_vs_vz.png}}{}
 \end{figure}
 
 
@@ -98,6 +121,27 @@ These graphs give rise to a process to choose exactly the value of those voltage
 Here, given the common mode output spec, choosing a size for MN10, and estimating the MN10 backgate gives the needed value of Vz.
 Given a size ratio for MN7 to MP8 gives the needed value of Vy, knowing Vz.
 Given the size ratio for MP4 to MN6 and knowing the value of Vy gives the gives the necessary ratio of R3 to R4 to program the value of Vy.
+
+{\centering
+	\includegraphics[width=0.7\textwidth]{flowchart_common_mode.png}\par
+}
+
+Similarly for Vx, given a goal for MP4 gm (from our chosen distribution of stage gain) we can solve for the ratio of R1 to R2 to program the value of Vx.
+Since we have set the K value of MN1 and MP3 equal, the voltage at Vx is selected purely by the ratio of R1 and R2.
+
+{\centering
+	\includegraphics[width=0.4\textwidth]{flowchart_r1_r2.png}\par
+}
+
+Once the math was developed to decouple the selection of stage gain to the DC biasing selection, the focus was on gain/speed. 
+First we distributed the desired gain for each stage, then choose the vov level to drive the transistors based on the gm/Id plots, 
+and then sized the transistors to minimize tau for adjacent stages.\par
+
+The gain budget was based on the X stage having the most gain, since it's easy to get there, getting the balance of gain from the Y stage and then setting the Z stage to cancel out the gain loss of the output CD stage. 
+Thus total gain simplifies to X * Y = 30k. \par
+
+By making plots of the sum of tau for adjacent stages vs critical transistor sizing we were able to minimize total tau for the design, with the given gain budget.\par
+
 
 \pagebreak
 
@@ -113,7 +157,14 @@ Given the size ratio for MP4 to MN6 and knowing the value of Vy gives the gives 
 % overdrive VOV (from SPICE .op simulation) and W/L.
 
 \section{Design Schematic}
-Text of design schematic
+
+{\centering
+	\includegraphics[page=1, angle=270, width=0.9\textwidth]{project_schematic.pdf}\par
+}
+
+{\centering
+	\includegraphics[page=2, angle=270, width=0.9\textwidth]{project_schematic.pdf}\par
+}
 
 \pagebreak
 
@@ -135,10 +186,10 @@ Text of design schematic
 \textbf{Choice of L}
 
 \begin{itemize}
-\item All devices used in current source have a minimum length of 2um.
-\item All other devices in the amplifier have minimum length of 1um. 
-Mimimum length is used as f$_{t }$is inversely proportional to L.
-\item All devices in bias generator circuit have length $>$=2um.
+\item All devices used in current source have a minimum length of 2$\mu$m.
+\item All other devices in the amplifier have minimum length of 1$\mu$m. 
+Minimum length is used as f$_{t }$ is inversely proportional to L.
+\item All devices in bias generator circuit have length $>$=2$\mu$m.
 \end{itemize}
 
 
@@ -166,167 +217,120 @@ For simpler hand calculations, following approximations are used.
 \item $gmb=0.2gm$
 \setcounter{numberedCntBB}{\theenumi}
 \end{enumerate}
+
+
 \textbf{Stage4}
 
 \begin{itemize}
-\item As per the spec, common mode output voltage (vout) has to be 
-within -0.15v to 0.15v. Since the body is connected to vss, MN10 
-experiences back gate effect and the threshold voltage is given by
+	\item As per the spec, common mode output voltage (vout) has to be within -0.15v to 0.15v. Since the body is connected to vss, MN10 experiences back gate effect and the threshold voltage is given by:
+	\begin{equation}
+	\begin{split}
+		Vt=Vt_0+ \gamma(\sqrt{2\phi f+V_{sb}}- \sqrt{2}\phi f\\
+		Vt_0=0.5V , \gamma=0.6 , 2\phi f=0.8
+	\end{split}
+	\end{equation}
+
+
+	\item Stage 4 is a source follower which has a gain given by
+	\begin{equation}
+		A4=\frac{gm_{10}}{gm_{10}+gmb_{10}+(\frac{1}{R_L})}
+	\end{equation}
+	\item Gain of stage4 (A4) $<$1 due to back gate effect and the output load. 
+	\item To achieve gain closer to 1 (0.6 - 0.7), it is important to size and bias MN10 such that ($gm_{10}+ gmb_{10}) >> (1/R_L)$. 
+	\item Transconductance of and drain current of $MN_{10}$ is given by 
+	\begin{equation}
+		gm_{10}= \mu nCox(\frac{W}{L})vov_{10}
+	\end{equation}
+	\begin{equation}
+		Id_{10}=0.5\mu nCox(\frac{W_{10}}{L_{10}})vov_{10}^2 (1+\lambda (Vdd-Vout))
+	\end{equation}
+	\item $MN_9$ (bias device for source follower) is sized such that $Id_{10}+ I_{R_L}= Id_9$ and the common mode output voltage does not fall out of range. This device is chosen to be of smaller size to reduce loading on Vout node. 
+	\begin{equation}
+		\tau_{OUTPUT} = (R_L || \frac{1}{1.2gm_{10}})(C_L+Csb_{10}+Cgd_9+Cdb_9)
+	\end{equation}
+	\item Cgs10 is assumed to be very small due to boot-strapping.
 \end{itemize}
-$Vt=Vt0+ ?(\sqrt{2\emptyset f+Vsb}- \sqrt{2}\emptyset f$ where $
-t0=0.5v$ , $?=0.6$ , $2\emptyset f=0.8$
-
-
-
-\begin{itemize}
-\item Stage 4 is a source follower which has a gain given by $
-A4=\frac{gm10}{gm10+gmb10+(\frac{1}{RL})}$
-\end{itemize}
-Gain of stage4 (A4) $<$1 due to back gate effect and the output load. 
-
-\newcounter{numberedCntF}
-\begin{enumerate}
-\item To achieve gain closer to 1 (0.6 - 0.7), it is important to size 
-and bias MN10 such that (gm10+ gmb10) $>$$>$ (1/RL). 
-\begin{itemize}
-\item Transconductance of gm10 is given by $gm10= \mu 
-nCox(\frac{W}{L})Vov10$
-\end{itemize}
-\end{enumerate}
-Drain current $Id10=0.5\mu nCox(\frac{W10}{L10})Vov10^{2} (1+\lambda 
-(Vdd-Vout)$
-
-\begin{itemize}
-\item MN9 (bias device for source follower) is sized such that I$_{d10 
-}$+ I$_{RL }$= I$_{d9 }$and the common mode output voltage does 
-not fall out of range. This device is chosen to be of smaller size to 
-reduce loading on Vout node. 
-\item $\tau stage4 (at Vout)=(RL || 
-(\frac{1}{1.2gm10}))(CL+Csb10+Cgd9+Cdb9)$
-\end{itemize}
-Cgs10 is assumed to be very small due to boot-strapping.
-
 
 
 \textbf{Stage 3}
 
-
-
 \begin{itemize}
-\item Loading at node Vy increases with the increase in gain of stage 3 
-due to miller effect. Hence gain of stage3 is kept low and is fixed at 
-sqrt(2) to compensate for the gain lost in stage 4. 
-\end{itemize}
-Gain of stage3 (CS amplifier with diode connected load)
+	\item Loading at node Vy increases with the increase in gain of stage 3 due to the miller effect. Hence gain of stage3 is kept low and is fixed at sqrt(2) to compensate for the gain lost in stage 4. Gain of stage3 (CS amplifier with diode connected load):
+	\begin{equation}
+		|A3|=\frac{gm7}{gm8}=\frac{Vov8}{Vov7}=\frac{Vdd-Vz-abs(Vtp)}{Vy-Vss-Vtn}=\sqrt{2}
+	\end{equation}
 
-
-
-$
-abs(A3)=\frac{gm7}{gm8}=\frac{Vov8}{Vov7}=\frac{Vdd-Vz-abs(Vtp)}{Vy-Vss-Vtn}= 
-\sqrt{2}$\\
-
-
- 
-
-Choice of Vz from above (stage4) determines Vy.
-
-\begin{itemize}
-\item Minimum device sizes (W=2um, L=1um) are used for both MN7 and MP8 
-to reduce loading on Vy and Vz.
-\end{itemize}
-Drain current $Id7=Id8=0.5\mu nCox(\frac{W7}{L7})Vov7^{2} (1+\lambda 
-(Vz-Vss)$
-
-\begin{itemize}
-\item $\tau stage3 (at Vz)=(\frac{1}{gm8})(Cgs8+Cdb8+Cgd10+Cgd7 
-(1+\frac{1}{abs(A3)})+Cdb7)$
+	\item Choice of Vz from above (stage4) determines Vy.	
+	\item Minimum device sizes (W=2$\mu$m, L=1$\mu$m) are used for both MN7 and MP8 to reduce loading on Vy and Vz.
+	\begin{equation}
+		Id_7=Id_8=0.5\mu nCox(\frac{W_7}{L_7})vov_7^{2} (1+\lambda(Vz-Vss))
+	\end{equation}
+	\begin{equation}
+		\tau_Z=(\frac{1}{gm_8})(Cgs_8+Cdb_8+Cgd_{10}+Cgd_7(1+\frac{1}{|A3|})+Cdb_7)
+	\end{equation}
 \end{itemize}
 
 
 \textbf{Stage 2}
 
 \begin{itemize}
-\item Vy from stage 3 above determines the ratio of R3 and R4.
-\end{itemize}
-$y (\frac{R4}{R3})=\frac{Vss}{Vy}-1 $\\
+	\item Vy from stage Z above determines the required ratio of R3 and R4.
+	\begin{equation}
+		(\frac{R4}{R3})=\frac{Vss}{Vy}-1
+	\end{equation}
 
-
-\begin{itemize}
-\item Gain of stage 2 (Cascode amplifier) is set to 3.
-\end{itemize}
-$abs(A2)=gm4(R3 || R4) $\\
-
-
-\begin{itemize}
-\item Vov4 and W$_{4 }$are optimized to reduce $\tau stage3$ at Vx. 
-
+	\item Gain of stage Y (Cascode amplifier) is set to 3.
+	\begin{equation}
+		|A2|=gm4(R3 || R4)
+	\end{equation}
+	\item $Vov_4$ and $W_{4}$ are optimized to reduce $\tau_X$.
 \end{itemize}
 
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=10.63cm,height=7.99cm]{tau_x_y_vs_mp4.png}
 \end{figure}
 
 
 \begin{itemize}
-\item MN6 is sized such that current through MN6 is same as the current 
-through MP4 and MP5. 
+	\item MN6 is sized such that current through MN6 is same as the current through MP4 and MP5. 
+	\begin{equation}
+		Id4=Id5=Id6=0.5\mu pCox(\frac{W4}{L4})(Vdd-Vx-abs(Vtp))^{2} (1+\lambda (Vdd-Vw)
+	\end{equation}
+	\item Current through R3 and R4
+	\begin{equation}
+		I_{R3}+I_{R4}=Vss/(R3+R4)
+	\end{equation}
+	\begin{equation}
+		\tau_Y=(R3 || R4)(Cgs_7+Cgd_7 (1+|A3|)+Cgd_6+Cdb_6+Cgd_5+Cdb_5)
+	\end{equation}
 \end{itemize}
-$Id4=Id5=Id6=0.5\mu pCox(\frac{W4}{L4})(Vdd-Vx-abs(Vtp))^{2} (1+\lambda 
-(Vdd-Vw)$\\
-
-
-\begin{itemize}
-\item Current through R3 and R4
-\end{itemize}
-$IR3+R4=Vss/(R3+R4)$\\
-
-
-
-
-\begin{itemize}
-\item $\tau stage2 (Vy)$
-\end{itemize}
-$=(R3 || R4)(Cgs7+Cgd7 (1+abs(A3))+Cgd6+Cdb6+Cgd5+Cdb5)$\\
-
-
 
 
 \textbf{Stage 1}
 
 \begin{itemize}
-\item Vov4 from stage 2 sets Vx which in turn sets the ratio of R1 and 
-R2.
+	\item $Vov_4$ from stage 2 sets $V_X$ which in turn sets the ratio of R1 and R2.
+	\begin{equation}
+		Vov_4=Vdd-Vx-|Vtp|
+	\end{equation}
+	\begin{equation}
+		(\frac{R1}{R2})=\frac{Vdd}{Vx}-1
+	\end{equation}
+	\item Gain of stage 1 (Common gate amplifier) is set to 10000.
+	\begin{equation}
+		|A1|=(R1 || R2)
+	\end{equation}
+	\item MN1 and MP3 are sized such that Id1 = Id3.
+	\item MN2 is sized to reduce $\tau_{IIN}$ node.  $\tau_{IIN}$ is inversely proportional to $gm_2$.
+	\begin{equation}
+		\tau_{IIN}=(\frac{1}{gm2})(Cin+Cgd_1+Cdb_1+Cgs_2+Csb_2)
+	\end{equation}
+	\begin{equation}
+		\tau_{X}=(R1 || R2)(Cgd_2+Cdb_2+Cgd_3+Cdb_3+Cgs_4+Cgd_4)
+	\end{equation}
 \end{itemize}
-
-
-$Vov4=Vdd-Vx-abs(Vtp) $\\
-
-
-$x (\frac{R1}{R2})=\frac{Vdd}{Vx}-1 $\\
-
-
-\begin{itemize}
-\item Gain of stage 1 (Common gate amplifier) is set to 10000.
-\end{itemize}
-$abs(A1)=(R1 || R2) $\\
-
-
-\begin{itemize}
-\item MN1 and MP3 are sized such that Id1 = Id3.
-\end{itemize}
-
-
-\begin{itemize}
-\item MN2 is sized to reduce Tau at n\_iin node. Tau (n\_iin) is 
-inversely proportional to gm2.
-\end{itemize}
-$\tau stage1 (n_iin)=(\frac{1}{gm2})(Cin+Cgd1+Cdb1+Cgs2+Csb2)$\\
-
-
-$\tau stage1 (Vx)=(R1 || R2)(Cgd2+Cbd2+Cgd3+Cdb3+Cgs4+Cgd4 (2))$\\
-
 
 
 
@@ -337,111 +341,113 @@ $\tau stage1 (Vx)=(R1 || R2)(Cgd2+Cbd2+Cgd3+Cdb3+Cgs4+Cgd4 (2))$\\
 
 
 \begin{itemize}
-\item Current through MN1, MN2 and MP3
+	\item Current through MN1, MN2 and MP3
+	\begin{equation}
+		Id_{1,2,3}=0.5\mu pCox(\frac{W_3}{L_3})(Vdd-VbiasP-|Vtp|)^{2} (1+\lambda (Vdd-Vx))
+	\end{equation}
+	\item Current through R1 and R2
+	\begin{equation}
+		I_{R1}+I_{R2}=Vdd/(R1+R2)
+	\end{equation}
 \end{itemize}
-$Id1,2,3=0.5\mu pCox(\frac{W3}{L3})(Vdd-VbiasP-abs(Vtp))^{2} (1+\lambda 
-(Vdd-Vx))$\\
-
-
-\begin{itemize}
-\item Current through R1 and R2
-\end{itemize}
-$IR1+R2=Vdd/(R1+R2)$\\
-
 
 \textbf{Vovn, Vovp}
 
 \begin{itemize}
-\item Vovn and Vovp are chosen to achieve a reasonable balance between 
-gain, Tau total and Power.
+	\item Vovn and Vovp are chosen to achieve a reasonable balance between gain, Tau total and Power, and our choice was educated by the gm/Id technology plots.
 \end{itemize}
-$Gain total (A)=A1A2A3A4$\\
-
-
-$\tau total=\tau stage1(n_{iin})+\tau stage1(Vx)+\tau stage2(Vy)+\tau 
-stage3(Vz)+\tau stage1 (Vout)$\\
-
-
-$
-Power=(Vdd-Vss)(Id1+Id4+Id7+Id10)+(\frac{Vdd^{2}}{R1+R2})+(\frac{Vss^{2}}{R3+R4}) 
-$\\
-
+	
+\textbf{Total Design Performance}
+\begin{equation}
+	|A_{TOTAL}|=A1* A2* A3* A4
+\end{equation}
+\begin{equation}
+	\tau_{TOTAL}=\tau_{IIN}+\tau_X+\tau_Y+\tau_Z+\tau_{OUTPUT}
+\end{equation}
+\begin{equation}
+	Power=(Vdd-Vss)(Id_1+Id_4+Id_7+Id_{10})+(\frac{Vdd^{2}}{R1+R2})+(\frac{Vss^{2}}{R3+R4})
+\end{equation}
 
 \begin{table}[h]
 \centering
 \begin{tabular}{|l|l|l|l|l|}
 \hline
-\textbf{Stage1} & Hand calculation & Spice & \%Error & Reason for 
-error \\
+\textbf{Bias Generator} & Hand calc & Spice & \%Error & Reason for error \\
 \hline
-Id1 &   &   &   &   \\
+$V_{BiasN}$ & -1.300V &  -1.279V &  -1.6\% &  Startup circuit bias \\
 \hline
-Vx &   &   &   &   \\
-\hline
-A1 (Gain of stage1) &   &   &   &   \\
-\hline
-gm2 &   &   &   &   \\
-\hline
-Tau (iin) &   &   &   &   \\
+$V_{BiasP}$ & 1.300V &  1.319V & 1.5\%  &  Startup circuit bias \\
 \hline
   &   &   &   &   \\
 \hline
-\textbf{Stage2} & Hand calculation & Spice & \%Error & Reason for 
-error \\
+\textbf{Stage1} & Hand calc & Spice & \%Error & Reason for error \\
 \hline
-Id4 &   &   &   &   \\
+$Id_1$ & 18.3$\mu$A  &  20.9$\mu$A &  14.2\% &  Bias generator error \\
 \hline
-Vw &   &   &   &   \\
+Vx & 1.300V  & 1.275V  & -1.9\%  &   \\
 \hline
-Vy &   &   &   &   \\
+$A_X$ & 10k$\Omega$  & 9.86k$\Omega$  & -1.4\%  & Finite $MN_1$ and $MP_3$ output resistance  \\
 \hline
-gm4 &   &   &   &   \\
+$gm_2$ &  210$\mu$S & 268$\mu$S  & 27.6\%  & Bias generator error  \\
 \hline
-A2 (Gain of stage2) &   &   &   &   \\
+$\tau_{IN} $ & 1.11ns  &   &   &   \\
 \hline
-Tau (Vy) &   &   &   &   \\
-\hline
-  &   &   &   &   \\
-\hline
-\textbf{Stage3} & Hand calculation & Spice & \%Error & Reason for 
-error \\
-\hline
-Id7 &   &   &   &   \\
-\hline
-Vz &   &   &   &   \\
-\hline
-gm7 &   &   &   &   \\
-\hline
-gm8 &   &   &   &   \\
-\hline
-A3 (Gain of stage3) &   &   &   &   \\
-\hline
-Tau (Vz) &   &   &   &   \\
+$\tau_X $ & 420ps  &   &   &   \\
 \hline
   &   &   &   &   \\
 \hline
-\textbf{Stage4} & Hand calculation & Spice & \%Error & Reason for 
-error \\
+\textbf{Stage2} & Hand calc & Spice & \%Error & Reason for error \\
 \hline
-Id10 &   &   &   &   \\
+$Id_4$ &  36.75$\mu$A & 43.5$\mu$A & 18.4\%  &   \\
 \hline
-Vout &   &   &   &   \\
+$V_W$ & 1.496V & 1.450V  & -3.2\%  &   \\
 \hline
-Vt10 &   &   &   &   \\
+$V_Y$ & -1.550V  & -1.418V  &  -8.5\% & Imbalance between $MP_4$ and $MN_6$ current \\
 \hline
-gm10 &   &   &   &   \\
+$gm_4$ & 105$\mu$S  &  120$\mu$S & 14.3\%  & Error in $V_Y$ \\
 \hline
-gmb10 &   &   &   &   \\
+$A_Y$ & -3.0  & -3.25  & 8.3\%  & Error estimating $gm_4$  \\
 \hline
-A4 (Gain of stage4) &   &   &   &   \\
-\hline
-Tau (vout) &   &   &   &   \\
+$\tau_Y$ & 306ps  &   &   &   \\
 \hline
   &   &   &   &   \\
 \hline
-Total Power &   &   &   &   \\
+\textbf{Stage3} & Hand calc & Spice & \%Error & Reason for error \\
 \hline
-Total Gain &   &   &   &   \\
+$Id_7$ & 10.25$\mu$A  & 22.9$\mu$A  & 123\%  & Error in $V_Y$ plus finite output resistance  \\
+\hline
+$V_Z$ & 1.364 & 1.102V  & -19.2\%  & Error in $V_Y$   \\
+\hline
+$gm_7$ & 45$\mu$S  & 79$\mu$S  & 75.5\%  &  Error in $Id_7$ \\
+\hline
+$gm_8$ & 31.2$\mu$S & 51$\mu$S   &  63.5\% &  Error in $Id_7$  \\
+\hline
+$A_Z$ & 1.414  & 1.440  & 1.8\%  &  The benefit of ratiometric design \\
+\hline
+$\tau_Z$ & 1.92ns  &   &   &  Error in estimating $gm_{8}$ \\
+\hline
+  &   &   &   &   \\
+\hline
+\textbf{Stage4} & Hand calc & Spice & \%Error & Reason for error \\
+\hline
+$Id_{10}$ & 2.96$\mu$A  &  30.43$\mu$A &  928\% & $MN_{10}$'s large width is a big error amplifier  \\
+\hline
+$V_{OUT}$ & 0.299 & -0.117V  &  -139\% &   \\
+\hline
+$Vt_{10}$ & 0.999  & 1.034V  &  3.5\% &   \\
+\hline
+$gm_{10}$ & 91.1$\mu$S   &  327$\mu$S  & 258\%  &   \\
+\hline
+$gmb_{10}$ & 13.0$\mu$S  &  55.1$\mu$S  & 323\%  &   \\
+\hline
+$A_{OUT}$ & 0.71 & 0.75  & 5.6\%  &   \\
+\hline
+$\tau_{OUT}$ & 1.63ns  &   &   & Error in estimating $gm_{10}$  \\
+
+\hline
+Total Power &  578$\mu$W & 1.065mW  & 84\%  & Not accounting for bias gen  \\
+\hline
+Total Gain & 30.04k$\Omega$  & 34.66k$\Omega$   &  15.5\% & Error in estimating gm  \\
 \hline
 \end{tabular}
 \end{table}
@@ -459,11 +465,13 @@ Total Gain &   &   &   &   \\
 
 \section{Simulated Bode Plots}
 
-\centering
-\includegraphics[width=\textwidth]{mag.png}
+{\centering
+	\includegraphics[width=1.1\textwidth]{mag.png}
+\par}
 
-\centering
-\includegraphics[width=\textwidth]{phase.png}
+{\centering
+	\includegraphics[width=1.1\textwidth]{phase.png}
+\par}
 
 \pagebreak
 
@@ -518,6 +526,110 @@ Differential configuration will be better.
 % listing from the .op output.
 
 \section{Appendix I}
-Netlist here
+\begin{lstlisting}
+* Design Problem, ee114/214A-2015
+* Team Member 1 Name: Usha Kankanala
+* Team Member 2 Name: Samuel Lenius
+* Please fill in the specification achieved by your circuit
+* before you submit the netlist
+*************************************************************
+* sunetids of team members:
+*   ukankana@stanford.edu:  06091239
+*   lenius@stanford.edu:    06091240
+* The specification that this script achieves are:
+* Power         1.06mW    <= 2.00 mW      Meets Spec
+* Gain          34.6kOhm  >=  30.0 kOhm   Meets Spec
+* BandWidth     93.0MHz   >= 90.0 MHz     Meets Spec
+* FOM           3043      >= 1350         Meets Spec
+*************************************************************
+
+* Including the model file
+.include /usr/class/ee114/hspice/ee114_hspice.sp
+
+
+* Defining Top level circuit parameters
+.param p_Cin = 220f
+.param p_CL  = 250f
+.param p_RL  = 20k
+
+* Defining the supply voltages
+vdd     n_vdd   0       2.5
+vss     n_vss   0       -2.5
+
+*Defining the input current source
+** For ac simulation uncomment the following 2 lines**
+Iin     n_iin   0       ac      100n
+*Iin     n_iin   0       ac      1
+
+** For transient simulation uncomment the following 2 lines**
+*Iin    n_iin    0    sin(0 0.5u 1e6)
+
+* Defining Input capacitance
+Cin    n_iin    0    'p_Cin'
+
+* Defining the load
+RL      n_vout  0       'p_RL'
+CL      n_vout  0       'p_CL'
+
+*** Your Trans-impedance Amplifier here ***
+***     d       g       s       b       n/pmos114       w       l
+
+*** Vx/Iin = V(n_x) / Iin, use "n_x" as the node label for Vx ***
+MN1     n_iin   n_bias_n  n_vss   n_vss nmos114 w=3.0u l=2.0u
+MN2     n_x     0         n_iin  n_vss  nmos114 w=28.0u l=1.0u
+MP3     n_x     n_bias_p  n_vdd  n_vdd  pmos114 w=6.0u l=2.0u
+R1      n_vdd   n_x       19200
+R2      n_x     0         20800
+
+*** Vy/Vx = V(n_y) / V(n_x), use "n_y" as the node label for Vy ***
+MP4     n_w     n_x       n_vdd  n_vdd  pmos114 w=6.0u l=1.0u
+MP5     n_y     0         n_w    n_vdd  pmos114 w=6.0u l=1.0u
+MN6     n_y     n_bias_n  n_vss  n_vss  nmos114 w=3.0u l=2.0u
+R3      n_y     0         168100
+R4      n_y     n_vss     34400
+
+*** Vz/Vy = V(n_z) / V(n_y), use "n_z" as the node label for Vz ***
+MN7     n_z     n_y       n_vss  n_vss  nmos114 w=2.0u l=1.0u
+MP8     n_z     n_z       n_vdd  n_vdd  pmos114 w=2.0u l=1.0u
+
+*** Vout/Vz = V(n_vout) / V(n_z), use "n_vout" as the node label for Vout ***
+MN9     n_vout  n_bias_n  n_vss  n_vss  nmos114 w=5.0u l=2.0u
+MN10    n_vdd   n_z       n_vout n_vss  nmos114 w=28.0u l=1.0u
+
+*** Your Bias Circuitry goes here ***
+MP100   n_bias_n n_bias_p n_vdd n_vdd  pmos114 w=4u  l=2u
+MP200   n_bias_p n_bias_p n_vdd n_vdd  pmos114 w=4u  l=2u
+MN300   n_bias_n n_bias_n n_vss n_vss  nmos114 w=2u  l=2u
+MN400   n_bias_p n_bias_n n_biasr2   n_vss  nmos114 w=4u l=2u
+R200    n_biasr2 n_vss  16.7k
+MP800   n_biasn9 n_bias_n n_vdd n_vdd pmos114 w=2u  l=9u
+MN700   n_biasn9 n_bias_n n_vss n_vss nmos114 w=5u  l=2u
+MN900   n_bias_p n_biasn9 n_vss n_vss nmos114 w=4u  l=2u
+
+*** defining the analysis ***
+.op
+.option post brief nomod
+
+** For ac simulation uncomment the following line**
+.ac dec 1k 100 1g
+
+.measure ac gainmax_vout max vdb(n_vout)
+.measure ac f3db_vout when vdb(n_vout)='gainmax_vout-3'
+
+.measure ac gainmax_vx max vdb(n_x)
+.measure ac f3db_vx when vdb(n_x)='gainmax_vx-3'
+
+.measure ac gainmax_vy max vdb(n_y)
+.measure ac f3db_vy when vdb(n_y)='gainmax_vy-3'
+
+.measure ac gainmax_vz max vdb(n_z)
+.measure ac f3db_vz when vdb(n_z)='gainmax_vz-3'
+
+** For transient simulation uncomment the following line **
+*.tran 0.01u 4u
+
+.end
+\end{lstlisting}
+%\lstinputlisting[caption=Scheduler, style=customc]{}
 
 \end{document}

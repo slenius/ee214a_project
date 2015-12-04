@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.4)  4 DEC 2015 02:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.4)  4 DEC 2015 06:07
 entering extended mode
 **C:/Users/Sam/Documents/git/ee214a_project/report/final_report.tex
 (C:/Users/Sam/Documents/git/ee214a_project/report/final_report.tex
@@ -301,19 +301,44 @@ LaTeX Info: Redefining \addtolength on input line 81.
 \@centerbox=\box38
 \c@ROWcellindex@=\count133
 )
+(C:\Users\Sam\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\listings.sty
+\lst@mode=\count134
+\lst@gtempboxa=\box39
+\lst@token=\toks26
+\lst@length=\count135
+\lst@currlwidth=\dimen139
+\lst@column=\count136
+\lst@pos=\count137
+\lst@lostspace=\dimen140
+\lst@width=\dimen141
+\lst@newlines=\count138
+\lst@lineno=\count139
+\lst@maxwidth=\dimen142
+
+(C:\Users\Sam\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\lstmisc.sty
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+\c@lstnumber=\count140
+\lst@skipnumbers=\count141
+\lst@framebox=\box40
+)
+(C:\Users\Sam\AppData\Roaming\MiKTeX\2.9\tex\latex\listings\listings.cfg
+File: listings.cfg 2015/06/04 1.6 listings configuration
+))
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
+
 (final_report.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -352,190 +377,156 @@ LaTeX Font Info:    ... okay on input line 18.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: float package is loaded.
+Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 51.
+\c@lstlisting=\count142
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 52.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\t1cmtt.fd"
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 60.
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd"
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 60.
- [0
+) [0
 
 {C:/Users/Sam/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-<cmv_vs_vz.png, id=12, 401.5pt x 300.12125pt>
+<cmv_vs_vz.png, id=13, 401.5pt x 300.12125pt>
 File: cmv_vs_vz.png Graphic file (type png)
  <use cmv_vs_vz.png>
-Package pdftex.def Info: cmv_vs_vz.png used on input line 91.
-(pdftex.def)             Requested size: 210.09193pt x 157.04852pt.
+Package pdftex.def Info: cmv_vs_vz.png used on input line 114.
+(pdftex.def)             Requested size: 262.61894pt x 196.32211pt.
 File: cmv_vs_vz.png Graphic file (type png)
 
 <use cmv_vs_vz.png>
-Package pdftex.def Info: cmv_vs_vz.png used on input line 91.
-(pdftex.def)             Requested size: 210.09193pt x 157.04852pt.
+Package pdftex.def Info: cmv_vs_vz.png used on input line 114.
+(pdftex.def)             Requested size: 262.61894pt x 196.32211pt.
 File: cmv_vs_vz.png Graphic file (type png)
  <use cmv_vs_vz.png>
-Package pdftex.def Info: cmv_vs_vz.png used on input line 93.
-(pdftex.def)             Requested size: 210.09193pt x 157.04852pt.
+Package pdftex.def Info: cmv_vs_vz.png used on input line 116.
+(pdftex.def)             Requested size: 262.61894pt x 196.32211pt.
 File: cmv_vs_vz.png Graphic file (type png)
  <use cmv_vs_vz.png>
-Package pdftex.def Info: cmv_vs_vz.png used on input line 93.
-(pdftex.def)             Requested size: 210.09193pt x 157.04852pt.
- [1 <./cmv_vs_vz.png (PNG copy)>] [2]
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 138.
+Package pdftex.def Info: cmv_vs_vz.png used on input line 116.
+(pdftex.def)             Requested size: 262.61894pt x 196.32211pt.
 
-Overfull \hbox (24.67921pt too wide) in paragraph at lines 150--152
+Overfull \hbox (2.22168pt too wide) in paragraph at lines 114--117
+[][]  [] 
+ []
+
+<flowchart_common_mode.png, id=14, 442.7742pt x 117.5592pt>
+File: flowchart_common_mode.png Graphic file (type png)
+
+<use flowchart_common_mode.png>
+Package pdftex.def Info: flowchart_common_mode.png used on input line 126.
+(pdftex.def)             Requested size: 367.6649pt x 97.62073pt.
+
+<flowchart_r1_r2.png, id=15, 252.945pt x 72.27pt>
+File: flowchart_r1_r2.png Graphic file (type png)
+ <use flowchart_r1_r2.png>
+Package pdftex.def Info: flowchart_r1_r2.png used on input line 133.
+(pdftex.def)             Requested size: 210.09193pt x 60.02707pt.
+
+[1 <./cmv_vs_vz.png (PNG copy)> <./flowchart_common_mode.png> <./flowchart_r1_r
+2.png>] <project_schematic.pdf, id=20, page=1, 614.295pt x 794.97pt>
+File: project_schematic.pdf Graphic file (type pdf)
+
+<use project_schematic.pdf, page 1>
+Package pdftex.def Info: project_schematic.pdf, page1 used on input line 162.
+(pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
+
+<project_schematic.pdf, id=21, page=2, 614.295pt x 794.97pt>
+File: project_schematic.pdf Graphic file (type pdf)
+
+<use project_schematic.pdf, page 2>
+Package pdftex.def Info: project_schematic.pdf, page2 used on input line 166.
+(pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
+ [2 <./project_schematic.pdf> <./project_schematic.pdf>]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 189.
+
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 189.
+
+Overfull \hbox (24.67921pt too wide) in paragraph at lines 201--203
 []\T1/cmr/m/n/12 Transconductance of bias de-vice (mn300) de-pends only on R2 a
 nd m ( m is the ra-tio of MN300/MN400).
  []
 
-\c@numberedCntBB=\count134
-\c@numberedCntF=\count135
-
-Underfull \hbox (badness 10000) in paragraph at lines 224--227
-
- []
-
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 251--252
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 257--258
-
- []
-
-<tau_x_y_vs_mp4.png, id=32, 402.50375pt x 300.12125pt>
+\c@numberedCntBB=\count143
+[3] <tau_x_y_vs_mp4.png, id=38, 402.50375pt x 300.12125pt>
 File: tau_x_y_vs_mp4.png Graphic file (type png)
 
 <use tau_x_y_vs_mp4.png>
-Package pdftex.def Info: tau_x_y_vs_mp4.png used on input line 268.
+Package pdftex.def Info: tau_x_y_vs_mp4.png used on input line 292.
 (pdftex.def)             Requested size: 302.45439pt x 227.34348pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 276--278
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 283--284
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 291--292
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 304--305
-
- []
-
-[4 <./tau_x_y_vs_mp4.png (PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 307--308
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 313--314
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 325--326
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 328--329
-
- []
-
-<tau_i_x_vs_mn2.png, id=36, 401.5pt x 300.12125pt>
+ [4 <./tau_x_y_vs_mp4.png (PNG copy)>]
+<tau_i_x_vs_mn2.png, id=42, 401.5pt x 300.12125pt>
 File: tau_i_x_vs_mn2.png Graphic file (type png)
  <use tau_i_x_vs_mn2.png>
-Package pdftex.def Info: tau_i_x_vs_mn2.png used on input line 335.
+Package pdftex.def Info: tau_i_x_vs_mn2.png used on input line 339.
 (pdftex.def)             Requested size: 302.47206pt x 227.34348pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 342--344
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 349--350
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 358--359
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 361--363
-
- []
-
-[5 <./tau_i_x_vs_mn2.png (PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 365--368
-
- []
-
-[6] <mag.png, id=44, 1003.75pt x 601.24625pt>
+[5 <./tau_i_x_vs_mn2.png (PNG copy)>] [6]
+<mag.png, id=50, 1003.75pt x 601.24625pt>
 File: mag.png Graphic file (type png)
  <use mag.png>
-Package pdftex.def Info: mag.png used on input line 463.
-(pdftex.def)             Requested size: 525.23788pt x 314.63148pt.
+Package pdftex.def Info: mag.png used on input line 469.
+(pdftex.def)             Requested size: 577.76488pt x 346.09921pt.
 
-<phase.png, id=45, 1003.75pt x 601.24625pt>
+Overfull \hbox (52.527pt too wide) in paragraph at lines 469--470
+ [] 
+ []
+
+<phase.png, id=51, 1003.75pt x 601.24625pt>
 File: phase.png Graphic file (type png)
  <use phase.png>
-Package pdftex.def Info: phase.png used on input line 466.
-(pdftex.def)             Requested size: 525.23788pt x 314.63148pt.
- [7 <./mag.png (PNG copy)> <./phase.png (PNG copy)>]
-<transient_response.png, id=49, 562.1pt x 420.57124pt>
+Package pdftex.def Info: phase.png used on input line 473.
+(pdftex.def)             Requested size: 577.76488pt x 346.09921pt.
+
+Overfull \hbox (52.527pt too wide) in paragraph at lines 473--474
+ [][] 
+ []
+
+[7 <./mag.png (PNG copy)> <./phase.png (PNG copy)>]
+<transient_response.png, id=55, 562.1pt x 420.57124pt>
 File: transient_response.png Graphic file (type png)
 
 <use transient_response.png>
-Package pdftex.def Info: transient_response.png used on input line 479.
+Package pdftex.def Info: transient_response.png used on input line 487.
 (pdftex.def)             Requested size: 421.57397pt x 315.42766pt.
  [8 <./transient_response.png (PNG copy)>] [9]
-[10] (final_report.aux) ) 
+[10]
+Overfull \hbox (17.48428pt too wide) in paragraph at lines 595--596
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][] 
+ []
+
+[11] (final_report.aux) ) 
 Here is how much of TeX's memory you used:
- 5461 strings out of 493673
- 77958 string characters out of 3141536
- 185454 words of memory out of 3000000
- 8727 multiletter control sequences out of 15000+200000
- 16390 words of font info for 44 fonts, out of 3000000 for 9000
+ 7073 strings out of 493673
+ 99472 string characters out of 3141536
+ 240987 words of memory out of 3000000
+ 10325 multiletter control sequences out of 15000+200000
+ 15345 words of font info for 42 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 50i,7n,54p,860b,319s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 50i,16n,54p,865b,1524s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Sam\AppData\Local\MiKTeX\2.9\fonts\pk\ljfou
-r\jknappen\ec\dpi600\ecbx1200.pk> <C:\Users\Sam\AppData\Local\MiKTeX\2.9\fonts\
-pk\ljfour\jknappen\ec\dpi600\ecbx1728.pk> <C:\Users\Sam\AppData\Local\MiKTeX\2.
+r\jknappen\ec\dpi600\ecbx1728.pk> <C:\Users\Sam\AppData\Local\MiKTeX\2.9\fonts\
+pk\ljfour\jknappen\ec\dpi600\ecrm0800.pk> <C:\Users\Sam\AppData\Local\MiKTeX\2.
 9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk> <C:\Users\Sam\AppData\Local\M
-iKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1095.pk> <C:\Users\Sam\AppData
-\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1095.pk> <C:\Users\Sam
-\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ectt1440.pk> <C:\U
-sers\Sam\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1440.p
-k> <C:\Users\Sam\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ec
-rm2074.pk><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cme
-x10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi1
-2.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.p
-fb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb>
-<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:
-/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Pro
-gram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program
- Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program F
-iles (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on final_report.pdf (11 pages, 253963 bytes).
+iKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1200.pk> <C:\Users\Sam\AppData
+\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ectt1440.pk> <C:\Users\Sam
+\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1440.pk> <C:\U
+sers\Sam\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm2074.p
+k><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb>
+<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C
+:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/P
+rogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Prog
+ram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program
+ Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Fil
+es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files
+ (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on final_report.pdf (12 pages, 936831 bytes).
 PDF statistics:
- 355 PDF objects out of 1000 (max. 8388607)
+ 342 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 51 words of extra memory for PDF output out of 10000 (max. 10000000)
 
