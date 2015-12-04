@@ -10,12 +10,12 @@
  lic:  
  lic: FLEXlm: v10.9.8 
  lic: USER:   lenius               HOSTNAME: corn27.stanford.edu 
- lic: HOSTID: 001b213a6bad         PID:      6922 
+ lic: HOSTID: 001b213a6bad         PID:      9885 
  lic: Using FLEXlm license file: 
  lic: 27000@cadlic0 
  lic: Checkout 1 hspice 
  lic: License/Maintenance for hspice will expire on 09-jan-2016/2015.06 
- lic: 1(in_use)/200(total) FLOATING license(s) on SERVER 27000@cadlic0 
+ lic: 2(in_use)/200(total) FLOATING license(s) on SERVER 27000@cadlic0 
  lic:   
   
       
@@ -184,7 +184,7 @@
  ******  Machine Information  ******
  CPU:
  model name	: Quad-Core AMD Opteron(tm) Processor 2384
- cpu MHz	: 2700.000
+ cpu MHz	: 800.000
   
  OS:
  Linux version 3.13.0-53-generic (buildd@phianna) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) ) #89-Ubuntu SMP Wed May 20 10:34:39 UTC 2015
@@ -217,15 +217,15 @@
   readin             0.01
   errchk             0.00
   setup              0.00
-  output             0.01
+  output             0.00
 
 
            peak memory used        176.94 megabytes
-           total cpu time            0.10 seconds
-           total elapsed time        1.24 seconds
-           job started at     06:17:16 12/04/2015
-           job ended   at     06:17:17 12/04/2015
+           total cpu time            0.09 seconds
+           total elapsed time        1.19 seconds
+           job started at     06:46:11 12/04/2015
+           job ended   at     06:46:13 12/04/2015
 
 
  lic: Release hspice token(s) 
- lic: total license checkout elapse time:        1.04(s)
+ lic: total license checkout elapse time:        1.01(s)
