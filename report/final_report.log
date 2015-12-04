@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.4)  4 DEC 2015 07:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.4)  4 DEC 2015 07:08
 entering extended mode
 **C:/Users/Sam/Documents/git/ee214a_project/report/final_report.tex
 (C:/Users/Sam/Documents/git/ee214a_project/report/final_report.tex
@@ -396,41 +396,44 @@ File: cmv_vs_vz.png Graphic file (type png)
 <use cmv_vs_vz.png>
 Package pdftex.def Info: cmv_vs_vz.png used on input line 114.
 (pdftex.def)             Requested size: 262.61894pt x 196.32211pt.
-File: cmv_vs_vz.png Graphic file (type png)
- <use cmv_vs_vz.png>
-Package pdftex.def Info: cmv_vs_vz.png used on input line 116.
+ <vz_vs_vy.png, id=14, 401.5pt x 300.12125pt>
+File: vz_vs_vy.png Graphic file (type png)
+
+<use vz_vs_vy.png>
+Package pdftex.def Info: vz_vs_vy.png used on input line 116.
 (pdftex.def)             Requested size: 262.61894pt x 196.32211pt.
-File: cmv_vs_vz.png Graphic file (type png)
- <use cmv_vs_vz.png>
-Package pdftex.def Info: cmv_vs_vz.png used on input line 116.
+File: vz_vs_vy.png Graphic file (type png)
+ <use vz_vs_vy.png>
+Package pdftex.def Info: vz_vs_vy.png used on input line 116.
 (pdftex.def)             Requested size: 262.61894pt x 196.32211pt.
 
 Overfull \hbox (2.22168pt too wide) in paragraph at lines 114--117
 [][]  [] 
  []
 
-<flowchart_common_mode.png, id=14, 442.7742pt x 117.5592pt>
+<flowchart_common_mode.png, id=15, 442.7742pt x 117.5592pt>
 File: flowchart_common_mode.png Graphic file (type png)
 
 <use flowchart_common_mode.png>
 Package pdftex.def Info: flowchart_common_mode.png used on input line 126.
 (pdftex.def)             Requested size: 367.6649pt x 97.62073pt.
 
-<flowchart_r1_r2.png, id=15, 252.945pt x 72.27pt>
+<flowchart_r1_r2.png, id=16, 252.945pt x 72.27pt>
 File: flowchart_r1_r2.png Graphic file (type png)
  <use flowchart_r1_r2.png>
 Package pdftex.def Info: flowchart_r1_r2.png used on input line 133.
 (pdftex.def)             Requested size: 210.09193pt x 60.02707pt.
 
-[1 <./cmv_vs_vz.png (PNG copy)> <./flowchart_common_mode.png> <./flowchart_r1_r
-2.png>] <project_schematic.pdf, id=20, page=1, 614.295pt x 794.97pt>
+[1 <./cmv_vs_vz.png (PNG copy)> <./vz_vs_vy.png (PNG copy)> <./flowchart_common
+_mode.png> <./flowchart_r1_r2.png>]
+<project_schematic.pdf, id=21, page=1, 614.295pt x 794.97pt>
 File: project_schematic.pdf Graphic file (type pdf)
 
 <use project_schematic.pdf, page 1>
 Package pdftex.def Info: project_schematic.pdf, page1 used on input line 162.
 (pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
 
-<project_schematic.pdf, id=21, page=2, 614.295pt x 794.97pt>
+<project_schematic.pdf, id=22, page=2, 614.295pt x 794.97pt>
 File: project_schematic.pdf Graphic file (type pdf)
 
 <use project_schematic.pdf, page 2>
@@ -451,21 +454,21 @@ nd m ( m is the ra-tio of MN300/MN400).
  []
 
 \c@numberedCntBB=\count143
-[3] <tau_x_y_vs_mp4.png, id=40, 402.50375pt x 300.12125pt>
+[3] <tau_x_y_vs_mp4.png, id=41, 402.50375pt x 300.12125pt>
 File: tau_x_y_vs_mp4.png Graphic file (type png)
 
 <use tau_x_y_vs_mp4.png>
 Package pdftex.def Info: tau_x_y_vs_mp4.png used on input line 294.
 (pdftex.def)             Requested size: 302.45439pt x 227.34348pt.
  [4 <./tau_x_y_vs_mp4.png (PNG copy)>]
-<tau_i_x_vs_mn2.png, id=44, 401.5pt x 300.12125pt>
+<tau_i_x_vs_mn2.png, id=45, 401.5pt x 300.12125pt>
 File: tau_i_x_vs_mn2.png Graphic file (type png)
  <use tau_i_x_vs_mn2.png>
 Package pdftex.def Info: tau_i_x_vs_mn2.png used on input line 341.
 (pdftex.def)             Requested size: 302.47206pt x 227.34348pt.
 
 [5 <./tau_i_x_vs_mn2.png (PNG copy)>] [6]
-<mag.png, id=52, 1003.75pt x 601.24625pt>
+<mag.png, id=53, 1003.75pt x 601.24625pt>
 File: mag.png Graphic file (type png)
  <use mag.png>
 Package pdftex.def Info: mag.png used on input line 471.
@@ -475,7 +478,7 @@ Overfull \hbox (52.527pt too wide) in paragraph at lines 471--472
  [] 
  []
 
-<phase.png, id=53, 1003.75pt x 601.24625pt>
+<phase.png, id=54, 1003.75pt x 601.24625pt>
 File: phase.png Graphic file (type png)
  <use phase.png>
 Package pdftex.def Info: phase.png used on input line 475.
@@ -486,7 +489,7 @@ Overfull \hbox (52.527pt too wide) in paragraph at lines 475--476
  []
 
 [7 <./mag.png (PNG copy)> <./phase.png (PNG copy)>]
-<transient_response.png, id=57, 562.1pt x 420.57124pt>
+<transient_response.png, id=58, 562.1pt x 420.57124pt>
 File: transient_response.png Graphic file (type png)
 
 <use transient_response.png>
@@ -517,10 +520,10 @@ Package pdftex.def Info: project_schematic.pdf, page2 used on input line 556.
 (pdftex.def)             Requested size: 525.23788pt x 679.76707pt.
  [17] (final_report.aux) ) 
 Here is how much of TeX's memory you used:
- 8020 strings out of 493673
- 110307 string characters out of 3141536
- 543944 words of memory out of 3000000
- 11255 multiletter control sequences out of 15000+200000
+ 8025 strings out of 493673
+ 110386 string characters out of 3141536
+ 543996 words of memory out of 3000000
+ 11259 multiletter control sequences out of 15000+200000
  17428 words of font info for 46 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
  50i,16n,54p,865b,1691s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -545,9 +548,9 @@ amsfonts/cm/cmr12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/ams
 fonts/cm/cmr8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfont
 s/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/
 cm/cmsy8.pfb>
-Output written on final_report.pdf (18 pages, 1005562 bytes).
+Output written on final_report.pdf (18 pages, 1008861 bytes).
 PDF statistics:
- 516 PDF objects out of 1000 (max. 8388607)
+ 517 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 51 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 56 words of extra memory for PDF output out of 10000 (max. 10000000)
 
