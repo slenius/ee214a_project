@@ -4,7 +4,134 @@
 \usepackage{ulem}
 \usepackage{amsmath}
 \usepackage[margin=0.5in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[ampersand]{easylist}
+\usepackage[english]{babel}
+\usepackage{scrextend}
+\usepackage{subfig}
+\usepackage{float}
+\usepackage{stackengine}
+%\usepackage[demo]{graphicx}
+%\usepackage{caption}
+%\usepackage{subcaption}
+%\usepackage[utf8]{inputenc}
 \begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document Setup
+
+\pagenumbering{arabic}
+\setcounter{page}{0}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title block - Page 0
+
+% Cover page. Clearly indicate the names of the team members.
+% Also provide a table comparing the given specs and achieved spec (remember
+% this is for the NON-BONUS part of the project only). You also need to provide
+% us a percentage-wise break down of area consumed by different sections of
+% bias circuit (VNMOS-bias, VPMOS-bias & bias generator circuit) as compared to
+% your core circuit area (refer to Figure 3). For area calculation, use
+% AMOS = W * L. Also include the area of resistors in your design. Assume that
+% the sheet resistance is 5.5 kohm/sq and the minimum length of resistor is
+% 1 um
+
+\author{
+  Kankanala, Usha\\
+  \texttt{ukankana@stanford.edu}\\
+  \texttt{SUID:06091239}
+  \and
+  Lenius, Samuel\\
+  \texttt{lenius@stanford.com}\\
+  \texttt{SUID:06091240}
+}
+
+\title{2015 EE214A Design Project}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Performance Summary Block - Page 0
+
+\begin{abstract}
+  Area Breakdown:
+  \begin{addmargin}[1em]{0em}
+  \begin{itemize}
+    \item PMOS Bias Gen: 25\%
+    \item NMOS Bias Gen: 25\%
+    \item Core circuit: 25\%
+    \item Resistors: 25\%
+  \end{itemize}
+  \end{addmargin}
+\end{abstract}
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Design Outline - Page 1
+
+% Outline of your design. How did you approach this problem? What are some of
+% your key design choices? Flow charts and graphs of how the trade-offs are
+% connected provide the best clarity in explaining (we'll show some examples in
+% class). Half of the grading (i.e. 25 Points) is related to Design Flow,
+% Insight and Optimization Strategy. The clarity of your discussion and the
+% insight you give, starting on Page 1, is a major factor in doing well for
+% these 25 Points.
+
+\section{Design Outline}
+
+\paragraph
+Our approach to this design was to first develop sizing ratios of the transistors and their DC relationships to Vx, Vy, Vz and Vo.
+We developed the equations necessary to `program' those voltages and to develop what their reasonable ranges are.
+Here are some graphs that show the relationships between the output common mode voltage and Vz, and then Vz to Vy given our sizing decisions.
+We developed a MATLAB program to quickly estimate critical parameters for a given design, to allow easy investigation of parametric variation.
+
+\begin{figure}[H]
+	\footnotesize
+	\stackunder[5pt]{\includegraphics[width=0.4\textwidth]{cmv_vs_vz.png}}{}
+	\hfill
+	\stackunder[5pt]{\includegraphics[width=0.4\textwidth]{cmv_vs_vz.png}}{}
+\end{figure}
+
+
+These graphs give rise to a process to choose exactly the value of those voltages based on the size of the transistors.
+Here, given the common mode output spec, choosing a size for MN10, and estimating the MN10 backgate gives the needed value of Vz.
+Given a size ratio for MN7 to MP8 gives the needed value of Vy, knowing Vz.
+Given the size ratio for MP4 to MN6 and knowing the value of Vy gives the gives the necessary ratio of R3 to R4 to program the value of Vy.
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Design Schematic - Page 2
+
+% Schematic diagram of your final design, with component values (i.e. W, L
+% values etc.), node voltages and bias currents (from SPICE .op simulation)
+% clearly labeled (Spend time to make this schematic complete, readable, and
+% clear!). Show component values right next to the components, and currents next
+% to the branches (i.e., absolutely, positively do not make us refer to a
+% look-up table!). Annotate all transistors with their drain current, gate
+% overdrive VOV (from SPICE .op simulation) and W/L.
+
+\section{Design Schematic}
+Text of design schematic
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Calculation of Key Design Parameters - Page 3-6
+
+% Calculation of key design parameters, such as transconductances, bias
+% currents, etc. This is the most important section of your report for giving
+% critical discussion! Compare the most relevant hand calculated values with
+% final SPICE values in a table and discuss discrepancies (percentage
+% differences will be clear, you need to show you understand them). Make sure to
+% include the total power dissipation of your design (calculated value and SPICE
+% result). The lowest power designs will not automatically score the highest
+% grades. The methodology you used to justify your design choices and component
+% values is far more important (see section on point distribution below).
+
+\section{Calculation of Key Design Parameters}
+
 \textbf{Choice of L}
 
 \begin{itemize}
@@ -77,7 +204,7 @@ reduce loading on Vout node.
 \item $\tau stage4 (at Vout)=(RL || 
 (\frac{1}{1.2gm10}))(CL+Csb10+Cgd9+Cdb9)$
 \end{itemize}
-Cgs10 is assumed to be very small due to boot strapping.
+Cgs10 is assumed to be very small due to boot-strapping.
 
 
 
@@ -134,6 +261,8 @@ $abs(A2)=gm4(R3 || R4) $\\
 \item Vov4 and W$_{4 }$are optimized to reduce $\tau stage3$ at Vx. 
 
 \end{itemize}
+
+
 \begin{figure}[h]
 \centering
 \includegraphics[width=10.63cm,height=7.99cm]{tau_x_y_vs_mp4.png}
@@ -203,7 +332,7 @@ $\tau stage1 (Vx)=(R1 || R2)(Cgd2+Cbd2+Cgd3+Cdb3+Cgs4+Cgd4 (2))$\\
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=10.63cm,height=7.99cm]{../matlab/tau_x_vs_mn2_w.png}
+\includegraphics[width=10.63cm,height=7.99cm]{tau_i_x_vs_mn2.png}
 \end{figure}
 
 
@@ -317,9 +446,49 @@ Total Gain &   &   &   &   \\
 \end{tabular}
 \end{table}
 
+\pagebreak
 
-Conclusion/Comments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bode Diagrams - Page 7
 
+% Simulated Bode Plots of A(jw), magnitude and phase. Clearly annotate the
+% achieved gain and bandwidth. Annotate your hand-calculated values in the same
+% plots, noting any specific features of interest (either from the results
+% themselves or based on what you've learned in hand calculations or scripting
+% the design). Plots must be annotated with meaningful comments/observations.
+
+\section{Simulated Bode Plots}
+
+\centering
+\includegraphics[width=\textwidth]{mag.png}
+
+\centering
+\includegraphics[width=\textwidth]{phase.png}
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Transient Response - Page 8
+
+% Show a transient simulation plot of the output for a 1 MHz, 1 µA sinusoidal
+% input current. Make sure that there is no distortion.
+
+\section{Simulated Transient Response}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=.75]{transient_response.png}
+\end{figure}
+
+\pagebreak
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Comments and Conclusions - Page 9
+
+% Comments and conclusion. Here, you can convey issues you may have had, or
+% things you have learned/not learned in this project.
+
+\section{Comments and Conclusion}
 
 
 \begin{itemize}
@@ -339,4 +508,16 @@ source stage to smaller values.
 \item Since the output is single ended, it is susceptible to noise. 
 Differential configuration will be better.
 \end{itemize}
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Spice Netlist - Appendix I
+
+% Final SPICE netlist and .op output. Include only the MOSFET and node voltage
+% listing from the .op output.
+
+\section{Appendix I}
+Netlist here
+
 \end{document}
